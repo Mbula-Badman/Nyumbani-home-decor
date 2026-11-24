@@ -3,12 +3,11 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from app.config import settings
-from app.database import Base
+from app.database import MIGRATION_DATABASE_URL, Base
 import app.models  # noqa: F401  (registers all models on Base.metadata)
 
 config = context.config
-config.set_main_option("sqlalchemy.url", settings.database_url.replace("%", "%%"))
+config.set_main_option("sqlalchemy.url", MIGRATION_DATABASE_URL.replace("%", "%%"))
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
