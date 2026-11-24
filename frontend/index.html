@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#183c32">
+<title>Nyumbani Home | Made for the way you live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1f2925;--muted:#6d7771;--line:#e8e9e3;--paper:#fbfaf7;--white:#fff;--green:#183c32;--green-2:#285647;--orange:#d9854d;--soft:#f1eee6;--danger:#a73535;--shadow:0 16px 40px rgba(27,48,38,.09);font-family:"DM Sans",sans-serif;color:var(--ink);background:var(--paper);color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--paper);font:400 15px/1.55 "DM Sans",sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #e6a56f;outline-offset:3px}
+h1,h2,h3,p{margin-top:0}
+h1,h2,h3{font-family:Manrope,sans-serif;line-height:1.15}
+.announce{background:var(--green);color:#eff1e9;text-align:center;padding:8px 16px;font-size:12px;letter-spacing:.035em}
+.header{position:sticky;top:0;z-index:10;background:rgba(251,250,247,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{max-width:1280px;min-height:76px;padding:12px 30px;margin:auto;display:flex;align-items:center;gap:28px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--green);font:800 21px Manrope,sans-serif;text-decoration:none;white-space:nowrap}
+.logo-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:50% 50% 50% 8px;background:var(--green);color:white;font-size:15px}
+.search-wrap{position:relative;max-width:450px;flex:1;margin:0 auto}
+.search-wrap span{position:absolute;left:15px;top:10px;color:#79817c;font-size:18px}
+.search{width:100%;height:44px;border:1px solid var(--line);border-radius:8px;background:#f4f3ef;padding:0 15px 0 42px;color:var(--ink)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.text-btn,.cart-btn{border:0;background:none;color:var(--ink);padding:10px;font-weight:600;white-space:nowrap}
+.text-btn:hover{color:var(--green-2)}
+.cart-btn{border:1px solid var(--line);border-radius:7px;padding:10px 15px}
+.cart-btn:hover{background:white}
+.mobile-search{display:none}
+.hero{max-width:1280px;margin:26px auto 34px;padding:0 30px}
+.hero-panel{min-height:390px;border-radius:14px;overflow:hidden;background:var(--green);display:grid;grid-template-columns:1fr 1.08fr}
+.hero-copy{padding:clamp(34px,6vw,78px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;color:#fff}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.16em;font-weight:700;color:#e3ad83}
+.hero h1{max-width:540px;font-size:clamp(36px,5vw,62px);letter-spacing:-.045em;margin:16px 0}
+.hero-copy p{max-width:390px;color:#d9e2dd;margin:0 0 26px;font-size:16px}
+.shop-link{display:inline-flex;align-items:center;gap:12px;background:#fff;color:var(--green);padding:12px 19px;border-radius:6px;text-decoration:none;font-weight:700}
+.shop-link:hover{background:#f3e7d8}
+.hero-image{min-height:330px;background:#d8cab4 url("https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1400&q=85") center 48%/cover}
+.benefits{max-width:1280px;margin:0 auto 54px;padding:0 30px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.benefit{display:flex;align-items:center;gap:14px;padding:18px 20px;background:#fff;border:1px solid var(--line);border-radius:8px}
+.benefit-icon{width:42px;height:42px;border-radius:50%;background:#eef2ec;color:var(--green);display:grid;place-items:center;font-size:18px;flex:none}
+.benefit b{display:block;font-size:14px}
+.benefit small{color:var(--muted);font-size:12px}
+.shop{max-width:1280px;margin:0 auto;padding:0 30px 78px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:20px}
+.section-head h2{font-size:30px;letter-spacing:-.03em;margin:0}
+.section-head p{margin:7px 0 0;color:var(--muted)}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:3px 0 24px;scrollbar-width:thin}
+.tabs button{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:30px;padding:9px 17px;white-space:nowrap}
+.tabs button[aria-pressed="true"],.tabs button:hover{background:var(--green);border-color:var(--green);color:white}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{background:#fff;border:1px solid #eeeee9;border-radius:9px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.product-photo{width:100%;aspect-ratio:1/1.03;object-fit:cover;display:block;background:var(--soft)}
+.photo-button{border:0;padding:0;background:var(--soft);position:relative;display:block;overflow:hidden}
+.photo-button img{transition:transform .4s}
+.card:hover .photo-button img{transform:scale(1.035)}
+.tag{position:absolute;left:12px;top:12px;background:#fff;color:var(--green);border-radius:3px;padding:5px 8px;font-size:10px;font-weight:700;letter-spacing:.04em}
+.card-body{padding:15px 16px 16px;display:flex;flex-direction:column;gap:5px;flex:1}
+.category{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#818a84;font-weight:700}
+.product-name{border:0;background:none;padding:0;text-align:left;color:var(--ink);font:700 15px Manrope,sans-serif}
+.product-name:hover{color:var(--green-2)}
+.description{color:var(--muted);font-size:12px;min-height:19px}
+.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px}
+.price{font:800 15px Manrope,sans-serif}
+.add{border:0;border-radius:5px;background:var(--green);color:#fff;padding:9px 12px;font-size:12px;font-weight:700}
+.add:hover{background:var(--green-2)}
+.empty{color:var(--muted);padding:28px 0}
+.footer{background:#f0eee7;border-top:1px solid var(--line);padding:32px 30px;color:var(--muted);font-size:13px}
+.footer-inner{max-width:1220px;margin:auto;display:flex;justify-content:space-between;gap:15px;align-items:center}
+.footer strong{color:var(--green)}
+.scrim{position:fixed;inset:0;background:rgba(15,27,22,.45);display:none;z-index:19}
+.scrim.on{display:block}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(430px,100%);background:var(--paper);z-index:20;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .24s;box-shadow:-10px 0 40px #18251d1c}
+.drawer.on{transform:none}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line)}
+.drawer-head h2{font-size:20px;margin:0}
+.drawer-head button{border:0;background:none;color:var(--ink);font-size:24px}
+.drawer-body{flex:1;overflow-y:auto;padding:18px 22px}
+.drawer-foot{padding:18px 22px;border-top:1px solid var(--line)}
+.row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.row img{width:62px;height:62px;border-radius:6px;object-fit:cover;background:var(--soft)}
+.row-info{flex:1}.row-info b{font-size:13px}.row-info small{color:var(--muted)}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:28px;height:28px;border-radius:5px;border:1px solid var(--line);background:white;color:var(--ink)}
+.total{display:flex;justify-content:space-between;margin:5px 0;color:var(--muted)}
+.total strong{color:var(--ink)}
+.checkout-btn,.pay-btn{width:100%;margin-top:14px;border:0;border-radius:6px;background:var(--green);color:white;padding:13px;font-weight:700}
+.checkout-btn:hover,.pay-btn:hover{background:var(--green-2)}
+.drawer-body label,.auth-fields label{display:block;font-weight:600;font-size:13px;margin:15px 0 6px}
+.drawer-body input,.drawer-body select,.auth-fields input{width:100%;border:1px solid var(--line);border-radius:6px;background:#fff;padding:12px;color:var(--ink)}
+.error{color:var(--danger);min-height:20px;font-size:13px}
+.auth-page{min-height:calc(100vh - 45px);display:none;max-width:1140px;margin:0 auto;padding:46px 28px;align-items:center}
+.auth-page.on{display:flex}
+.store-page.hidden{display:none}
+.auth-layout{width:100%;min-height:570px;display:grid;grid-template-columns:1fr 1fr;border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--shadow)}
+.auth-photo{background:linear-gradient(180deg,rgba(19,47,38,.1),rgba(17,42,34,.72)),url("https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=1200&q=85") center/cover;color:#fff;padding:42px;display:flex;flex-direction:column;justify-content:flex-end}
+.auth-photo h2{font-size:37px;max-width:400px;margin:12px 0}
+.auth-photo p{color:#e2e8e3;max-width:390px;margin:0}
+.auth-card{padding:clamp(30px,5vw,66px);display:flex;flex-direction:column;justify-content:center}
+.auth-back{border:0;background:none;color:var(--muted);padding:0;text-align:left;align-self:flex-start;margin-bottom:30px}
+.auth-card h1{font-size:30px;letter-spacing:-.03em;margin-bottom:8px}
+.auth-subtitle{color:var(--muted);margin:0 0 20px}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;background:#f1f1ec;border-radius:7px;margin-bottom:20px}
+.auth-tabs button{border:0;border-radius:5px;padding:10px;background:transparent;color:var(--muted);font-weight:600}
+.auth-tabs button[aria-pressed="true"]{background:#fff;color:var(--green);box-shadow:0 1px 5px #17241b12}
+.auth-fields{display:grid;gap:1px}
+.auth-submit{width:100%;border:0;border-radius:6px;padding:13px;background:var(--green);color:#fff;font-weight:700;margin:16px 0 11px}
+.auth-submit:disabled{opacity:.6;cursor:wait}
+.auth-note{color:#7d857f;font-size:11px;text-align:center}
+.auth-product{display:none;align-items:center;gap:10px;padding:10px;background:#f6f5f0;border-radius:6px;margin-bottom:6px}
+.auth-product.on{display:flex}
+.auth-product img{width:48px;height:48px;object-fit:cover;border-radius:4px}
+.auth-product small{display:block;color:var(--muted)}
+.account-name{max-width:120px;overflow:hidden;text-overflow:ellipsis}
+.spin{width:22px;height:22px;border:3px solid #ffffff66;border-top-color:white;border-radius:50%;animation:turn .8s linear infinite;margin:auto}
+@keyframes turn{to{transform:rotate(360deg)}}
+@media(max-width:980px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.nav{gap:16px}.hero-panel{grid-template-columns:1fr 1fr}.hero-copy{padding:38px}}
+@media(max-width:700px){.nav{padding:10px 16px;min-height:66px;gap:8px}.logo{font-size:17px;gap:7px}.logo-mark{width:30px;height:30px}.search-wrap{display:none}.mobile-search{display:block;padding:0 16px 12px}.nav-actions{margin-left:auto;gap:1px}.text-btn{font-size:12px;padding:8px 5px}.cart-btn{padding:9px;font-size:12px}.hero{padding:16px 16px 0;margin:0 auto 26px}.hero-panel{grid-template-columns:1fr}.hero-copy{padding:33px 25px 28px}.hero h1{font-size:40px}.hero-copy p{font-size:14px}.hero-image{min-height:230px;grid-row:1}.benefits{padding:0 16px;margin-bottom:40px;grid-template-columns:1fr;gap:8px}.benefit{padding:12px 15px}.benefit-icon{width:36px;height:36px}.shop{padding:0 16px 55px}.section-head{align-items:flex-start}.section-head h2{font-size:25px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.card-body{padding:11px}.description{font-size:11px}.card-bottom{align-items:flex-start;flex-direction:column}.add{width:100%}.product-photo{aspect-ratio:1/1.05}.footer{padding:24px 16px}.footer-inner{align-items:flex-start;flex-direction:column}.auth-page{padding:20px 14px;min-height:calc(100vh - 45px)}.auth-layout{grid-template-columns:1fr;min-height:auto}.auth-photo{min-height:170px;padding:22px}.auth-photo h2{font-size:25px;margin:6px 0}.auth-photo p{font-size:12px}.auth-card{padding:25px 22px 30px}.auth-back{margin-bottom:20px}.auth-card h1{font-size:26px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="announce">Thoughtful finds for your home · Delivery across Kenya</div>
+<header class="header">
+  <nav class="nav" aria-label="Main navigation">
+    <a class="logo" href="#" id="homeLink"><span class="logo-mark" aria-hidden="true">N</span>Nyumbani Home</a>
+    <div class="search-wrap"><span aria-hidden="true">⌕</span><input class="search" id="q" type="search" placeholder="Search bedding, decor and more" aria-label="Search products"></div>
+    <div class="nav-actions">
+      <button class="text-btn" id="account">Sign in</button>
+      <button class="cart-btn" id="openCart" aria-label="Open shopping bag">Bag (<span id="cnt">0</span>)</button>
+    </div>
+  </nav>
+  <div class="mobile-search"><div class="search-wrap" style="display:block"><span aria-hidden="true">⌕</span><input class="search" id="qm" type="search" placeholder="Search products" aria-label="Search products"></div></div>
+</header>
+
+<div class="store-page" id="storePage">
+  <section class="hero">
+    <div class="hero-panel">
+      <div class="hero-copy">
+        <span class="eyebrow">A little more home</span>
+        <h1>Make room for the good things.</h1>
+        <p>Everyday essentials, considered details and pieces made to feel at home.</p>
+        <a class="shop-link" href="#shop">Explore the collection <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="hero-image" role="img" aria-label="Warm, thoughtfully styled living room"></div>
+    </div>
+  </section>
+  <section class="benefits" aria-label="Shopping benefits">
+    <div class="benefit"><span class="benefit-icon" aria-hidden="true">◇</span><div><b>Secure M-Pesa checkout</b><small>Simple, trusted mobile payments</small></div></div>
+    <div class="benefit"><span class="benefit-icon" aria-hidden="true">⌖</span><div><b>Delivery across Kenya</b><small>Same-day delivery in Nakuru town</small></div></div>
+    <div class="benefit"><span class="benefit-icon" aria-hidden="true">↺</span><div><b>Easy 7-day returns</b><small>Shop with a little more confidence</small></div></div>
+  </section>
+  <main class="shop" id="shop">
+    <div class="section-head"><div><h2>Find your new favourite</h2><p>Useful, beautiful things for everyday living.</p></div></div>
+    <div class="tabs" id="tabs" role="group" aria-label="Filter by category"></div>
+    <div class="grid" id="grid"></div>
+  </main>
+  <footer class="footer"><div class="footer-inner"><strong>Nyumbani Home</strong><span>Made for the way you live · Nakuru, Kenya</span><span>Questions? We’re here to help.</span></div></footer>
+</div>
+
+<main class="auth-page" id="authPage">
+  <div class="auth-layout">
+    <section class="auth-photo" aria-label="Welcome to Nyumbani Home">
+      <span class="eyebrow">Welcome home</span>
+      <h2>Good things start with feeling at home.</h2>
+      <p>Sign in or create an account to keep your favourites close and continue shopping.</p>
+    </section>
+    <section class="auth-card">
+      <button class="auth-back" id="backShop">← Back to shopping</button>
+      <h1 id="authHeading">Welcome back</h1>
+      <p class="auth-subtitle" id="authSubtitle">Sign in to your account to continue.</p>
+      <div class="auth-product" id="authProduct"></div>
+      <div class="auth-tabs" role="tablist" aria-label="Account options">
+        <button id="loginTab" role="tab" aria-selected="true" aria-pressed="true">Sign in</button>
+        <button id="registerTab" role="tab" aria-selected="false" aria-pressed="false">Create account</button>
+      </div>
+      <form id="authForm" novalidate>
+        <div class="auth-fields" id="authFields"></div>
+        <p class="error" id="authError" role="alert"></p>
+        <button class="auth-submit" id="authSubmit" type="submit">Sign in</button>
+      </form>
+      <div class="auth-note">Your password is protected and never stored as plain text.</div>
+    </section>
+  </div>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Shopping bag" aria-modal="true">
+  <div class="drawer-head"><h2 id="drawerTitle">Your bag</h2><button id="closeCart" aria-label="Close shopping bag">×</button></div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot"></div>
+</aside>
+
+<script>
+const products=[
+  {id:0,name:"Cotton duvet set",cat:"Bedding",price:4800,image:"https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=900&q=80",desc:"6×6, with 2 pillowcases",tag:"BESTSELLER"},
+  {id:1,name:"Fleece blanket",cat:"Bedding",price:2200,image:"https://images.unsplash.com/photo-1600369671236-e74521d4b6ad?auto=format&fit=crop&w=900&q=80",desc:"Warm and light, double size"},
+  {id:2,name:"Pillow pair",cat:"Bedding",price:1500,image:"https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=900&q=80",desc:"Soft fibre filling"},
+  {id:3,name:"Fitted sheet set",cat:"Bedding",price:2600,image:"https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=900&q=80",desc:"Percale cotton, 3 pieces"},
+  {id:4,name:"Kitenge dress",cat:"Clothes",price:2500,image:"https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=900&q=80",desc:"Tailored, sizes S–XL",tag:"HANDPICKED"},
+  {id:5,name:"Kaftan shirt",cat:"Clothes",price:1800,image:"https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=900&q=80",desc:"Breathable cotton"},
+  {id:6,name:"Maasai shuka wrap",cat:"Clothes",price:900,image:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80",desc:"Classic red check"},
+  {id:7,name:"Everyday hoodie",cat:"Clothes",price:2200,image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=80",desc:"Brushed inside, unisex"},
+  {id:8,name:"Sufuria set (3 pcs)",cat:"Kitchen",price:2900,image:"https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=900&q=80",desc:"Stainless steel with lids",tag:"EVERYDAY PICK"},
+  {id:9,name:"Wooden spoon set",cat:"Kitchen",price:750,image:"https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=900&q=80",desc:"Set of 5, hand finished"},
+  {id:10,name:"Chopping board",cat:"Kitchen",price:1100,image:"https://images.unsplash.com/photo-1593618998160-e34014e67546?auto=format&fit=crop&w=900&q=80",desc:"Solid acacia wood"},
+  {id:11,name:"Mug set (6)",cat:"Kitchen",price:1300,image:"https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=900&q=80",desc:"Ceramic, 300 ml"},
+  {id:12,name:"Woven basket",cat:"Decor",price:1400,image:"https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=900&q=80",desc:"Sisal, handmade in Kenya"},
+  {id:13,name:"Ceramic vase",cat:"Decor",price:1900,image:"https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=900&q=80",desc:"Matte glaze, 30 cm"},
+  {id:14,name:"Cushion cover",cat:"Decor",price:600,image:"https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=900&q=80",desc:"45×45 cm, zip closure"},
+  {id:15,name:"Wall mirror",cat:"Decor",price:3200,image:"https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80",desc:"Round, rope frame"}
+];
+const categories=["All","Bedding","Clothes","Kitchen","Decor"];
+const delivery={town:["Nakuru town (same day)",150],kenya:["Elsewhere in Kenya",350],pickup:["Pick up in store",0]};
+const API="/api", $=selector=>document.querySelector(selector);
+const money=value=>"KES "+value.toLocaleString("en-KE");
+let cart={},category="All",query="",screen="store",authMode="login",currentUser=null,pendingProduct=null,returnAfterAuth="store",checkout={name:"",phone:"",ship:"town"};
+try{cart=JSON.parse(localStorage.getItem("nh-cart")||"{}")}catch(error){cart={}}
+const saveCart=()=>{try{localStorage.setItem("nh-cart",JSON.stringify(cart))}catch(error){}};
+const cartLines=()=>Object.keys(cart).map(id=>({product:products[Number(id)],quantity:cart[id]})).filter(line=>line.product);
+const subtotal=()=>cartLines().reduce((sum,line)=>sum+line.product.price*line.quantity,0);
+const itemCount=()=>cartLines().reduce((sum,line)=>sum+line.quantity,0);
+const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+
+function renderCategories(){
+  $("#tabs").innerHTML=categories.map(item=>`<button aria-pressed="${item===category}" data-category="${item}">${item}</button>`).join("");
+}
+function renderProducts(){
+  const found=products.filter(item=>(category==="All"||item.cat===category)&&item.name.toLowerCase().includes(query));
+  $("#grid").innerHTML=found.length?found.map(item=>`<article class="card">
+    <button class="photo-button" data-select="${item.id}" aria-label="Select ${escapeHtml(item.name)}">
+      <img class="product-photo" src="${item.image}" alt="${escapeHtml(item.name)}" loading="lazy">${item.tag?`<span class="tag">${item.tag}</span>`:""}
+    </button>
+    <div class="card-body"><span class="category">${item.cat}</span><button class="product-name" data-select="${item.id}">${escapeHtml(item.name)}</button><span class="description">${escapeHtml(item.desc)}</span>
+    <div class="card-bottom"><span class="price">${money(item.price)}</span><button class="add" data-select="${item.id}">Choose item</button></div></div>
+  </article>`).join(""):`<p class="empty">No products match “${escapeHtml(query)}”. Try another search or category.</p>`;
+}
+function updateAccount(){
+  $("#account").innerHTML=currentUser?`<span class="account-name">${escapeHtml(currentUser.full_name.split(" ")[0])}</span>`:"Sign in";
+  $("#account").setAttribute("aria-label",currentUser?"Sign out":"Sign in or create account");
+}
+function updateCount(){$("#cnt").textContent=itemCount()}
+function setQuantity(id,quantity){
+  if(quantity<1)delete cart[id];else cart[id]=quantity;
+  saveCart();updateCount();renderDrawer();
+}
+function openDrawer(){if(screen==="auth")return;$("#drawer").classList.add("on");$("#scrim").classList.add("on");renderDrawer()}
+function closeDrawer(){$("#drawer").classList.remove("on");$("#scrim").classList.remove("on")}
+function showAuth(mode="login",productId=null,returnTo="store"){
+  pendingProduct=productId===null?null:products[Number(productId)];
+  returnAfterAuth=returnTo;
+  authMode=mode;screen="auth";
+  closeDrawer();
+  $("#storePage").classList.add("hidden");$("#authPage").classList.add("on");
+  renderAuth();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function showStore(){
+  screen="store";$("#authPage").classList.remove("on");$("#storePage").classList.remove("hidden");
+}
+function renderAuth(){
+  const registering=authMode==="register";
+  $("#authHeading").textContent=registering?"Create your account":"Welcome back";
+  $("#authSubtitle").textContent=registering?"Join Nyumbani Home and make yourself at home.":"Sign in to your account to continue.";
+  $("#loginTab").setAttribute("aria-selected",String(!registering));$("#loginTab").setAttribute("aria-pressed",String(!registering));
+  $("#registerTab").setAttribute("aria-selected",String(registering));$("#registerTab").setAttribute("aria-pressed",String(registering));
+  $("#authFields").innerHTML=`${registering?'<label for="authName">Full name</label><input id="authName" name="name" autocomplete="name" minlength="2" maxlength="120" required>':""}
+    <label for="authEmail">Email address</label><input id="authEmail" name="email" type="email" autocomplete="email" required>
+    <label for="authPassword">Password</label><input id="authPassword" name="password" type="password" autocomplete="${registering?"new-password":"current-password"}" minlength="${registering?8:1}" required>`;
+  $("#authSubmit").textContent=registering?"Create account":"Sign in";
+  $("#authError").textContent="";
+  const selected=$("#authProduct");
+  selected.classList.toggle("on",!!pendingProduct);
+  selected.innerHTML=pendingProduct?`<img src="${pendingProduct.image}" alt=""><div><b>${escapeHtml(pendingProduct.name)}</b><small>${money(pendingProduct.price)} · ready to add after sign in</small></div>`:"";
+}
+async function api(path,options={}){
+  const response=await fetch(API+path,{credentials:"same-origin",...options,headers:{"Content-Type":"application/json",...(options.headers||{})}});
+  const data=response.status===204?null:await response.json().catch(()=>null);
+  if(!response.ok){
+    const detail=Array.isArray(data?.detail)?data.detail.map(item=>item.msg).join(" "):data?.detail;
+    throw new Error(detail||"Something went wrong. Please try again.");
+  }
+  return data;
+}
+function renderDrawer(){
+  const body=$("#drawerBody"),foot=$("#drawerFoot");
+  if(screen==="checkout"){
+    $("#drawerTitle").textContent="Checkout";
+    const fee=delivery[checkout.ship][1];
+    body.innerHTML=`<label for="fullName">Full name</label><input id="fullName" autocomplete="name" value="${escapeHtml(checkout.name||currentUser?.full_name||"")}">
+      <label for="phone">M-Pesa phone number</label><input id="phone" inputmode="tel" autocomplete="tel" placeholder="07XX XXX XXX" value="${escapeHtml(checkout.phone)}">
+      <label for="ship">Delivery</label><select id="ship">${Object.entries(delivery).map(([key,value])=>`<option value="${key}" ${key===checkout.ship?"selected":""}>${value[0]} — ${value[1]?money(value[1]):"free"}</option>`).join("")}</select><p class="error" id="checkoutError" role="alert"></p>
+      <p class="description">You’ll receive an M-Pesa prompt on this number.</p>`;
+    foot.innerHTML=`<div class="total"><span>Subtotal</span><span>${money(subtotal())}</span></div><div class="total"><span>Delivery</span><span>${fee?money(fee):"Free"}</span></div><div class="total"><strong>Total</strong><strong>${money(subtotal()+fee)}</strong></div><button class="pay-btn" id="pay">Pay with M-Pesa</button><button class="text-btn" id="backToBag">Back to bag</button>`;
+    return;
+  }
+  $("#drawerTitle").textContent="Your bag";
+  if(!itemCount()){body.innerHTML='<p class="empty">Your bag is waiting for something lovely.</p>';foot.innerHTML="";return}
+  body.innerHTML=cartLines().map(line=>`<div class="row"><img src="${line.product.image}" alt=""><div class="row-info"><b>${escapeHtml(line.product.name)}</b><br><small>${money(line.product.price)}</small></div><div class="qty"><button data-minus="${line.product.id}" aria-label="Remove one">−</button><span>${line.quantity}</span><button data-plus="${line.product.id}" aria-label="Add one">+</button></div></div>`).join("");
+  foot.innerHTML=`<div class="total"><strong>Subtotal</strong><strong>${money(subtotal())}</strong></div><small style="color:var(--muted)">Delivery is calculated at checkout.</small><button class="checkout-btn" id="continueCheckout">Continue to checkout</button>`;
+}
+function selectProduct(id){
+  if(!currentUser){showAuth("login",id);return}
+  setQuantity(id,(cart[id]||0)+1);openDrawer();
+}
+function normalizePhone(value){
+  const digits=value.replace(/[\s\-+]/g,""),match=digits.match(/^(?:254|0)?([17]\d{8})$/);
+  return match?"254"+match[1]:null;
+}
+async function submitAuth(event){
+  event.preventDefault();
+  const register=authMode==="register",error=$("#authError"),button=$("#authSubmit");
+  const email=$("#authEmail").value.trim(),password=$("#authPassword").value;
+  const payload={email,password};
+  if(register)payload.full_name=$("#authName").value.trim();
+  button.disabled=true;button.innerHTML='<span class="spin" aria-label="Signing in"></span>';error.textContent="";
+  try{
+    currentUser=await api(register?"/auth/register":"/auth/login",{method:"POST",body:JSON.stringify(payload)});
+    updateAccount();
+    const selectedProduct=!!pendingProduct;
+    if(pendingProduct){setQuantity(pendingProduct.id,(cart[pendingProduct.id]||0)+1);pendingProduct=null}
+    const destination=selectedProduct?"bag":returnAfterAuth;showStore();
+    if(destination==="checkout"){screen="checkout";openDrawer();renderDrawer()}
+    else if(destination==="bag")openDrawer();
+  }catch(err){error.textContent=err.message}
+  finally{button.disabled=false;button.textContent=register?"Create account":"Sign in"}
+}
+async function submitCheckout(){
+  const error=$("#checkoutError"),name=$("#fullName").value.trim(),phone=$("#phone").value,ship=$("#ship").value;
+  checkout={name,phone,ship};
+  const normalized=normalizePhone(phone);
+  if(name.length<2){error.textContent="Enter your full name.";return}
+  if(!normalized){error.textContent="Enter a valid Kenyan mobile number, like 0712 345 678.";return}
+  const button=$("#pay");button.disabled=true;button.textContent="Sending payment request…";error.textContent="";
+  try{
+    const result=await api("/checkout",{method:"POST",body:JSON.stringify({name,phone:normalized,delivery:ship,items:cartLines().map(line=>({id:line.product.id+1,qty:line.quantity}))})});
+    cart={};saveCart();updateCount();screen="done";
+    $("#drawerTitle").textContent="Order confirmed";
+    $("#drawerBody").innerHTML=`<div class="empty" style="text-align:center;padding-top:55px"><h3>Thank you, ${escapeHtml(name.split(" ")[0])}!</h3><p>Your order ${escapeHtml(result.order_number)} is confirmed.</p><p>We’ll be in touch before delivery.</p></div>`;
+    $("#drawerFoot").innerHTML='<button class="checkout-btn" id="keepShopping">Keep shopping</button>';
+  }catch(err){error.textContent=err.message;button.disabled=false;button.textContent="Pay with M-Pesa"}
+}
+
+document.addEventListener("click",event=>{
+  const target=event.target.closest("button,a");
+  if(!target)return;
+  const data=target.dataset;
+  if(data.category){category=data.category;renderCategories();renderProducts()}
+  else if(data.select!==undefined)selectProduct(data.select);
+  else if(data.plus!==undefined)setQuantity(data.plus,(cart[data.plus]||0)+1);
+  else if(data.minus!==undefined)setQuantity(data.minus,(cart[data.minus]||0)-1);
+  else if(target.id==="openCart"){if(!currentUser&&itemCount()){showAuth("login",null,"bag")}else openDrawer()}
+  else if(target.id==="closeCart"||target.id==="scrim")closeDrawer();
+  else if(target.id==="continueCheckout"){if(!currentUser){showAuth("login",null,"checkout");return}screen="checkout";checkout.name=currentUser.full_name;renderDrawer()}
+  else if(target.id==="backToBag"){screen="store";renderDrawer()}
+  else if(target.id==="pay")submitCheckout();
+  else if(target.id==="keepShopping"){screen="store";closeDrawer()}
+  else if(target.id==="account"){if(currentUser){api("/auth/logout",{method:"POST"}).then(()=>{currentUser=null;updateAccount()}).catch(error=>alert(error.message))}else showAuth("login",null,"store")}
+  else if(target.id==="loginTab"){authMode="login";renderAuth()}
+  else if(target.id==="registerTab"){authMode="register";renderAuth()}
+  else if(target.id==="backShop"||target.id==="homeLink"){event.preventDefault();pendingProduct=null;showStore()}
+});
+$("#authForm").addEventListener("submit",submitAuth);
+$("#q").addEventListener("input",event=>{query=event.target.value.toLowerCase().trim();$("#qm").value=event.target.value;renderProducts()});
+$("#qm").addEventListener("input",event=>{query=event.target.value.toLowerCase().trim();$("#q").value=event.target.value;renderProducts()});
+document.addEventListener("keydown",event=>{if(event.key==="Escape")closeDrawer()});
+renderCategories();renderProducts();updateCount();renderDrawer();
+api("/auth/me").then(user=>{currentUser=user;updateAccount()}).catch(()=>updateAccount());
+</script>
+</body>
+</html>
