@@ -3,7 +3,7 @@
 HTML/CSS/JS storefront -> FastAPI -> PostgreSQL (SQLAlchemy + Alembic) -> M-Pesa Daraja.
 
 ## Status
-- The storefront includes a responsive product catalog, product photography, sign-in/registration, account-backed checkout, and demo M-Pesa order confirmation.
+- The storefront opens with an animated splash screen and dedicated landing page, followed by a responsive catalog, product photography, account sign-in/registration, account-backed checkout, and demo M-Pesa order confirmation.
 - Authentication uses PBKDF2 password hashes and signed, HTTP-only session cookies. Set a strong `AUTH_SECRET` in the backend environment before deploying with `APP_ENV=production`.
 - Product and order data are stored in the configured database. Seed data can be loaded repeatedly with `python seed.py`.
 
