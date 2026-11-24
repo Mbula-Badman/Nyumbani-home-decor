@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///./nyumbani.db"
     cors_origins: str = "http://localhost:5500,http://127.0.0.1:5500,http://localhost:8000"
     auth_secret: str = ""
+    admin_email: str = ""
 
     # M-Pesa / Daraja. Values come from .env only, never from frontend code.
     mpesa_env: str = "sandbox"

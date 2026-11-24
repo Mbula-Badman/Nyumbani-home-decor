@@ -158,12 +158,77 @@ h1,h2,h3{font-family:Manrope,sans-serif;line-height:1.15}
 .auth-product img{width:48px;height:48px;object-fit:cover;border-radius:4px}
 .auth-product small{display:block;color:var(--muted)}
 .account-name{max-width:120px;overflow:hidden;text-overflow:ellipsis}
+.dashboard-page{display:none;min-height:calc(100vh - 76px);padding:30px;background:#f4f5f1}
+.dashboard-page.on{display:block}
+.dashboard-layout{max-width:1420px;margin:auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:22px;align-items:start}
+.dashboard-side,.dashboard-panel{background:#fff;border:1px solid var(--line);border-radius:10px}
+.dashboard-side{padding:18px;position:sticky;top:100px}
+.dash-brand{display:flex;align-items:center;gap:10px;color:var(--green);font:800 16px Manrope,sans-serif;padding:4px 2px 20px}
+.dash-profile{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 2px;margin-bottom:12px}
+.dash-profile b{display:block;font-size:13px}
+.dash-profile small{color:var(--muted);font-size:11px}
+.dash-nav{display:grid;gap:4px}
+.dash-nav button{border:0;border-radius:6px;background:none;color:var(--muted);padding:10px;text-align:left;font-weight:600}
+.dash-nav button:hover,.dash-nav button[aria-current="page"]{background:#eef2ec;color:var(--green)}
+.dashboard-main{min-width:0}
+.dashboard-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:22px}
+.dashboard-heading .eyebrow{color:var(--green-2)}
+.dashboard-heading h1{font-size:30px;margin:6px 0}
+.dashboard-heading p{color:var(--muted);margin:0}
+.dashboard-actions{display:flex;gap:8px;flex:none}
+.dashboard-actions button,.dash-button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:6px;padding:9px 13px;font-weight:600}
+.dashboard-actions button:hover,.dash-button:hover{border-color:var(--green);color:var(--green)}
+.dash-button.primary{background:var(--green);border-color:var(--green);color:#fff}
+.dash-button.danger{color:#9e3f36}
+.dashboard-message{min-height:0;color:var(--danger);margin:0 0 10px}
+.dashboard-message:empty{display:none}
+.dashboard-content{display:grid;gap:18px}
+.metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.metric-card{background:#fff;border:1px solid var(--line);border-radius:9px;padding:17px}
+.metric-card span{display:block;color:var(--muted);font-size:12px}
+.metric-card strong{display:block;color:var(--green);font:800 24px Manrope,sans-serif;margin:7px 0 2px}
+.metric-card small{color:#89918b;font-size:11px}
+.dash-panel-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
+.dashboard-panel{padding:20px;min-width:0}
+.panel-heading{display:flex;justify-content:space-between;align-items:start;gap:10px;margin-bottom:16px}
+.panel-heading h2{font-size:17px;margin:0}
+.panel-heading p{color:var(--muted);font-size:12px;margin:5px 0 0}
+.chart-bars{height:205px;display:flex;align-items:end;gap:9px;padding:16px 3px 0;border-bottom:1px solid var(--line)}
+.chart-day{height:100%;flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:7px;min-width:0}
+.chart-day small{font-size:10px;color:var(--muted)}
+.chart-bar{width:min(28px,70%);min-height:3px;background:#b8d0c0;border-radius:4px 4px 0 0}
+.chart-bar.today{background:var(--green)}
+.chart-bar:hover{background:#d9854d}
+.chart-empty{color:var(--muted);font-size:13px;text-align:center;padding:35px 0}
+.status-chart{display:grid;gap:12px}
+.status-row{display:grid;grid-template-columns:90px minmax(0,1fr) 28px;gap:8px;align-items:center;font-size:12px}
+.status-track{height:8px;background:#edf0eb;border-radius:9px;overflow:hidden}
+.status-fill{height:100%;background:#79a98b;border-radius:9px}
+.data-table-wrap{width:100%;overflow:auto}
+.data-table{width:100%;border-collapse:collapse;min-width:620px;font-size:12px}
+.data-table th,.data-table td{padding:11px 9px;border-bottom:1px solid #eef0ec;text-align:left;vertical-align:middle}
+.data-table th{color:#78817a;font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.data-table td b{font-size:12px}
+.data-table select,.data-table input{max-width:160px;border:1px solid var(--line);border-radius:5px;padding:7px;background:#fff;color:var(--ink)}
+.order-status{display:inline-block;border-radius:20px;background:#edf2ed;color:var(--green);padding:4px 8px;font-size:10px;text-transform:capitalize}
+.stock-low{color:#a34835;font-weight:700}
+.dashboard-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.dashboard-form label{display:grid;gap:5px;color:var(--muted);font-size:11px;font-weight:700}
+.dashboard-form input,.dashboard-form select,.dashboard-form textarea{width:100%;border:1px solid var(--line);border-radius:5px;padding:10px;background:#fff;color:var(--ink)}
+.dashboard-form textarea{min-height:74px;resize:vertical}
+.dashboard-form .form-wide{grid-column:1/-1}
+.form-actions{display:flex;gap:8px;align-items:center}
+.team-row{display:flex;align-items:center;gap:12px}
+.team-avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#edf2ed;color:var(--green);font-weight:700;flex:none}
+.dashboard-empty{color:var(--muted);font-size:13px;padding:20px 4px}
 .spin{width:22px;height:22px;border:3px solid #ffffff66;border-top-color:white;border-radius:50%;animation:turn .8s linear infinite;margin:auto}
 @keyframes turn{to{transform:rotate(360deg)}}
 @media(max-width:980px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.nav{gap:16px}.hero-panel{grid-template-columns:1fr 1fr}.hero-copy{padding:38px}}
 @media(max-width:980px){.welcome-hero{min-height:430px;grid-template-columns:1fr 1fr}.welcome-copy{padding:36px}.welcome-image{min-height:360px}}
+@media(max-width:980px){.dashboard-page{padding:22px 18px}.dashboard-layout{grid-template-columns:180px minmax(0,1fr);gap:14px}.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dash-panel-grid{grid-template-columns:1fr}}
 @media(max-width:700px){.nav{padding:10px 16px;min-height:66px;gap:8px}.logo{font-size:17px;gap:7px}.logo-mark{width:30px;height:30px}.search-wrap{display:none}.mobile-search{display:block;padding:0 16px 12px}.nav-actions{margin-left:auto;gap:1px}.text-btn{font-size:12px;padding:8px 5px}.cart-btn{padding:9px;font-size:12px}.hero{padding:16px 16px 0;margin:0 auto 26px}.hero-panel{grid-template-columns:1fr}.hero-copy{padding:33px 25px 28px}.hero h1{font-size:40px}.hero-copy p{font-size:14px}.hero-image{min-height:230px;grid-row:1}.benefits{padding:0 16px;margin-bottom:40px;grid-template-columns:1fr;gap:8px}.benefit{padding:12px 15px}.benefit-icon{width:36px;height:36px}.shop{padding:0 16px 55px}.section-head{align-items:flex-start}.section-head h2{font-size:25px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.card-body{padding:11px}.description{font-size:11px}.card-bottom{align-items:flex-start;flex-direction:column}.add{width:100%}.product-photo{aspect-ratio:1/1.05}.footer{padding:24px 16px}.footer-inner{align-items:flex-start;flex-direction:column}.auth-page{padding:20px 14px;min-height:calc(100vh - 45px)}.auth-layout{grid-template-columns:1fr;min-height:auto}.auth-photo{min-height:170px;padding:22px}.auth-photo h2{font-size:25px;margin:6px 0}.auth-photo p{font-size:12px}.auth-card{padding:25px 22px 30px}.auth-back{margin-bottom:20px}.auth-card h1{font-size:26px}}
 @media(max-width:700px){.welcome-hero{display:flex;flex-direction:column-reverse;gap:0;padding:16px 16px 0;margin:0 auto 28px}.welcome-image{min-height:245px;border-radius:12px 12px 0 0}.welcome-copy{padding:29px 24px;border-radius:0 0 12px 12px}.welcome-copy h1{font-size:42px;margin:13px 0}.welcome-copy p{font-size:14px}.landing-benefits{padding:0 16px;margin-bottom:42px;grid-template-columns:1fr;gap:8px}.landing-categories{padding:0 16px 55px}.landing-categories h2{font-size:25px}.category-tiles{grid-template-columns:1fr;gap:10px}.category-tile{min-height:155px}.splash-skip{right:16px;bottom:16px}.shop-nav{display:none}}
+@media(max-width:700px){.dashboard-page{padding:18px 12px 40px}.dashboard-layout{grid-template-columns:1fr}.dashboard-side{position:static;padding:12px}.dash-brand{padding-bottom:10px}.dash-profile{padding:10px 2px;margin-bottom:8px}.dash-nav{display:flex;overflow:auto;gap:5px}.dash-nav button{white-space:nowrap;padding:9px}.dashboard-heading{align-items:flex-start;flex-direction:column}.dashboard-heading h1{font-size:25px}.dashboard-actions{width:100%}.dashboard-actions button{flex:1}.dashboard-panel{padding:15px}.metric-card{padding:13px}.metric-card strong{font-size:20px}.dashboard-form{grid-template-columns:1fr}.dashboard-form .form-wide{grid-column:auto}.chart-bars{gap:4px}.status-row{grid-template-columns:72px minmax(0,1fr) 25px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -259,6 +324,24 @@ h1,h2,h3{font-family:Manrope,sans-serif;line-height:1.15}
   </div>
 </main>
 
+<main class="dashboard-page" id="dashboardPage">
+  <div class="dashboard-layout">
+    <aside class="dashboard-side">
+      <div class="dash-brand"><span class="logo-mark" aria-hidden="true">N</span>Nyumbani workspace</div>
+      <div class="dash-profile"><b id="dashUserName"></b><small id="dashUserRole"></small></div>
+      <nav class="dash-nav" id="dashboardNav" aria-label="Dashboard sections"></nav>
+    </aside>
+    <section class="dashboard-main">
+      <header class="dashboard-heading">
+        <div><span class="eyebrow" id="dashboardEyebrow">ACCOUNT</span><h1 id="dashboardTitle">Overview</h1><p id="dashboardSubtitle">Your Nyumbani Home workspace.</p></div>
+        <div class="dashboard-actions"><button id="dashboardShop">Back to shop</button><button id="dashboardLogout">Sign out</button></div>
+      </header>
+      <p class="dashboard-message" id="dashboardMessage" role="alert"></p>
+      <div class="dashboard-content" id="dashboardContent"></div>
+    </section>
+  </div>
+</main>
+
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer" aria-label="Shopping bag" aria-modal="true">
   <div class="drawer-head"><h2 id="drawerTitle">Your bag</h2><button id="closeCart" aria-label="Close shopping bag">×</button></div>
@@ -267,32 +350,42 @@ h1,h2,h3{font-family:Manrope,sans-serif;line-height:1.15}
 </aside>
 
 <script>
-const products=[
-  {id:0,name:"Cotton duvet set",cat:"Bedding",price:4800,image:"https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=900&q=80",desc:"6×6, with 2 pillowcases",tag:"BESTSELLER"},
-  {id:1,name:"Fleece blanket",cat:"Bedding",price:2200,image:"https://images.unsplash.com/photo-1600369671236-e74521d4b6ad?auto=format&fit=crop&w=900&q=80",desc:"Warm and light, double size"},
-  {id:2,name:"Pillow pair",cat:"Bedding",price:1500,image:"https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=900&q=80",desc:"Soft fibre filling"},
-  {id:3,name:"Fitted sheet set",cat:"Bedding",price:2600,image:"https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=900&q=80",desc:"Percale cotton, 3 pieces"},
-  {id:4,name:"Kitenge dress",cat:"Clothes",price:2500,image:"https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=900&q=80",desc:"Tailored, sizes S–XL",tag:"HANDPICKED"},
-  {id:5,name:"Kaftan shirt",cat:"Clothes",price:1800,image:"https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=900&q=80",desc:"Breathable cotton"},
-  {id:6,name:"Maasai shuka wrap",cat:"Clothes",price:900,image:"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80",desc:"Classic red check"},
-  {id:7,name:"Everyday hoodie",cat:"Clothes",price:2200,image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=80",desc:"Brushed inside, unisex"},
-  {id:8,name:"Sufuria set (3 pcs)",cat:"Kitchen",price:2900,image:"https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=900&q=80",desc:"Stainless steel with lids",tag:"EVERYDAY PICK"},
-  {id:9,name:"Wooden spoon set",cat:"Kitchen",price:750,image:"https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=900&q=80",desc:"Set of 5, hand finished"},
-  {id:10,name:"Chopping board",cat:"Kitchen",price:1100,image:"https://images.unsplash.com/photo-1593618998160-e34014e67546?auto=format&fit=crop&w=900&q=80",desc:"Solid acacia wood"},
-  {id:11,name:"Mug set (6)",cat:"Kitchen",price:1300,image:"https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=900&q=80",desc:"Ceramic, 300 ml"},
-  {id:12,name:"Woven basket",cat:"Decor",price:1400,image:"https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=900&q=80",desc:"Sisal, handmade in Kenya"},
-  {id:13,name:"Ceramic vase",cat:"Decor",price:1900,image:"https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=900&q=80",desc:"Matte glaze, 30 cm"},
-  {id:14,name:"Cushion cover",cat:"Decor",price:600,image:"https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=900&q=80",desc:"45×45 cm, zip closure"},
-  {id:15,name:"Wall mirror",cat:"Decor",price:3200,image:"https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80",desc:"Round, rope frame"}
-];
+const productPhotos={
+  "cotton-duvet-set":"https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=900&q=80",
+  "fleece-blanket":"https://images.unsplash.com/photo-1600369671236-e74521d4b6ad?auto=format&fit=crop&w=900&q=80",
+  "pillow-pair":"https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=900&q=80",
+  "fitted-sheet-set":"https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=900&q=80",
+  "kitenge-dress":"https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=900&q=80",
+  "kaftan-shirt":"https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=900&q=80",
+  "maasai-shuka-wrap":"https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80",
+  "everyday-hoodie":"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=80",
+  "sufuria-set-3-pcs":"https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=900&q=80",
+  "wooden-spoon-set":"https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=900&q=80",
+  "chopping-board":"https://images.unsplash.com/photo-1593618998160-e34014e67546?auto=format&fit=crop&w=900&q=80",
+  "mug-set-6":"https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=900&q=80",
+  "woven-basket":"https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=900&q=80",
+  "ceramic-vase":"https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=900&q=80",
+  "cushion-cover":"https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=900&q=80",
+  "wall-mirror":"https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80"
+};
+let products=[];
 const categories=["All","Bedding","Clothes","Kitchen","Decor"];
 const delivery={town:["Nakuru town (same day)",150],kenya:["Elsewhere in Kenya",350],pickup:["Pick up in store",0]};
-const API="/api", $=selector=>document.querySelector(selector);
+const API="/api", LOW_STOCK_LIMIT=5, $=selector=>document.querySelector(selector);
 const money=value=>"KES "+value.toLocaleString("en-KE");
-let cart={},category="All",query="",screen="landing",authMode="login",currentUser=null,pendingProduct=null,returnAfterAuth="landing",checkout={name:"",phone:"",ship:"town"},splashFinished=false;
-try{cart=JSON.parse(localStorage.getItem("nh-cart")||"{}")}catch(error){cart={}}
+let cart={},category="All",query="",screen="landing",authMode="login",currentUser=null,pendingProduct=null,returnAfterAuth="landing",checkout={name:"",phone:"",ship:"town"},splashFinished=false,dashboardTab="overview",editingProductId=null;
+try{
+  cart=JSON.parse(localStorage.getItem("nh-cart")||"{}");
+  if(localStorage.getItem("nh-cart-version")!=="2"){
+    const migrated={};
+    Object.keys(cart).forEach(id=>{const parsed=Number(id);if(Number.isInteger(parsed)&&parsed>=0)migrated[parsed+1]=cart[id]});
+    cart=migrated;
+    localStorage.setItem("nh-cart",JSON.stringify(cart));
+    localStorage.setItem("nh-cart-version","2");
+  }
+}catch(error){cart={}}
 const saveCart=()=>{try{localStorage.setItem("nh-cart",JSON.stringify(cart))}catch(error){}};
-const cartLines=()=>Object.keys(cart).map(id=>({product:products[Number(id)],quantity:cart[id]})).filter(line=>line.product);
+const cartLines=()=>Object.keys(cart).map(id=>({product:products.find(product=>product.id===Number(id)),quantity:cart[id]})).filter(line=>line.product);
 const subtotal=()=>cartLines().reduce((sum,line)=>sum+line.product.price*line.quantity,0);
 const itemCount=()=>cartLines().reduce((sum,line)=>sum+line.quantity,0);
 const escapeHtml=value=>String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
@@ -306,13 +399,24 @@ function renderProducts(){
     <button class="photo-button" data-select="${item.id}" aria-label="Select ${escapeHtml(item.name)}">
       <img class="product-photo" src="${item.image}" alt="${escapeHtml(item.name)}" loading="lazy">${item.tag?`<span class="tag">${item.tag}</span>`:""}
     </button>
-    <div class="card-body"><span class="category">${item.cat}</span><button class="product-name" data-select="${item.id}">${escapeHtml(item.name)}</button><span class="description">${escapeHtml(item.desc)}</span>
-    <div class="card-bottom"><span class="price">${money(item.price)}</span><button class="add" data-select="${item.id}">Choose item</button></div></div>
+    <div class="card-body"><span class="category">${escapeHtml(item.cat)}</span><button class="product-name" data-select="${item.id}">${escapeHtml(item.name)}</button><span class="description">${escapeHtml(item.desc)}</span>
+    <div class="card-bottom"><span class="price">${money(item.price)}</span><button class="add" data-select="${item.id}" ${item.stock_quantity<1?"disabled":""}>${item.stock_quantity<1?"Out of stock":"Choose item"}</button></div></div>
   </article>`).join(""):`<p class="empty">No products match “${escapeHtml(query)}”. Try another search or category.</p>`;
 }
+async function loadCatalog(){
+  try{
+    const items=await api("/products");
+    products=items.map(item=>({
+      id:Number(item.id),name:item.name,cat:item.category_name,price:Number(item.price),slug:item.slug,
+      image:item.image_url||productPhotos[item.slug]||productPhotos["cotton-duvet-set"],
+      desc:item.description||"",stock_quantity:item.stock_quantity,is_active:true
+    }));
+    renderProducts();updateCount();renderDrawer();
+  }catch(error){$("#grid").innerHTML=`<p class="empty" role="alert">${escapeHtml(error.message)}</p>`}
+}
 function updateAccount(){
-  $("#account").innerHTML=currentUser?`<span class="account-name">${escapeHtml(currentUser.full_name.split(" ")[0])}</span>`:"Sign in";
-  $("#account").setAttribute("aria-label",currentUser?"Sign out":"Sign in or create account");
+  $("#account").textContent=currentUser?"Dashboard":"Sign in";
+  $("#account").setAttribute("aria-label",currentUser?"Open your dashboard":"Sign in or create account");
 }
 function updateCount(){$("#cnt").textContent=itemCount()}
 function setQuantity(id,quantity){
@@ -322,10 +426,11 @@ function setQuantity(id,quantity){
 function openDrawer(){if(screen==="auth")return;$("#drawer").classList.add("on");$("#scrim").classList.add("on");renderDrawer()}
 function closeDrawer(){$("#drawer").classList.remove("on");$("#scrim").classList.remove("on")}
 function showAuth(mode="login",productId=null,returnTo="store"){
-  pendingProduct=productId===null?null:products[Number(productId)];
+  pendingProduct=productId===null?null:products.find(item=>item.id===Number(productId))||null;
   returnAfterAuth=returnTo;
   authMode=mode;screen="auth";
   closeDrawer();
+  $("#dashboardPage").classList.remove("on");
   $("#landingPage").classList.remove("active");
   $("#storePage").classList.add("hidden");$("#authPage").classList.add("on");
   renderAuth();
@@ -333,13 +438,14 @@ function showAuth(mode="login",productId=null,returnTo="store"){
 }
 function showLanding(){
   screen="landing";closeDrawer();
-  $("#authPage").classList.remove("on");$("#storePage").classList.add("hidden");$("#landingPage").classList.add("active");
+  $("#authPage").classList.remove("on");$("#dashboardPage").classList.remove("on");$("#storePage").classList.add("hidden");$("#landingPage").classList.add("active");
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function showStore(openCategory=null){
-  if(openCategory){category=openCategory;renderCategories();renderProducts()}
+  if(openCategory){category=openCategory;renderCategories()}
   screen="store";$("#authPage").classList.remove("on");$("#storePage").classList.remove("hidden");
-  $("#landingPage").classList.remove("active");
+  $("#landingPage").classList.remove("active");$("#dashboardPage").classList.remove("on");
+  renderProducts();
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function finishSplash(){
@@ -373,6 +479,179 @@ async function api(path,options={}){
     throw new Error(detail||"Something went wrong. Please try again.");
   }
   return data;
+}
+const dashboardTabs={
+  admin:[["overview","Overview"],["orders","Orders"],["products","Products & stock"],["team","Team"]],
+  staff:[["overview","Today"],["orders","Orders"],["inventory","Inventory"],["catalog","Catalog"]],
+  client:[["overview","Overview"],["orders","My orders"],["profile","My profile"]]
+};
+const dashboardTitles={
+  overview:["Overview","A quick view of your Nyumbani Home activity."],
+  orders:["Orders","Review orders and keep each one moving."],
+  products:["Products & stock","Update the catalog, prices, and stock levels."],
+  inventory:["Inventory","Check stock and update product details."],
+  catalog:["Catalog","Edit the products available to customers."],
+  team:["Team","Manage staff access and customer accounts."],
+  profile:["My profile","Keep your account and delivery details up to date."]
+};
+const statusOptions=["pending","paid","processing","shipped","delivered","cancelled","failed"];
+const dashboardDate=value=>value?new Date(value).toLocaleDateString("en-KE",{day:"numeric",month:"short",year:"numeric"}):"—";
+const dashboardMoney=value=>money(Number(value||0));
+function showDashboard(tab="overview"){
+  if(!currentUser){showAuth("login",null,screen==="landing"?"landing":"store");return}
+  screen="dashboard";dashboardTab=tab;closeDrawer();
+  $("#landingPage").classList.remove("active");$("#storePage").classList.add("hidden");$("#authPage").classList.remove("on");$("#dashboardPage").classList.add("on");
+  $("#dashUserName").textContent=currentUser.full_name;
+  $("#dashUserRole").textContent=currentUser.role.charAt(0).toUpperCase()+currentUser.role.slice(1)+" account";
+  $("#dashboardEyebrow").textContent=currentUser.role.toUpperCase()+" DASHBOARD";
+  $("#dashboardNav").innerHTML=dashboardTabs[currentUser.role].map(([id,label])=>`<button data-dashboard-tab="${id}" aria-current="${id===tab?"page":"false"}">${label}</button>`).join("");
+  window.scrollTo({top:0,behavior:"smooth"});
+  loadDashboardTab(tab);
+}
+async function loadDashboardTab(tab){
+  if(!dashboardTabs[currentUser.role].some(([id])=>id===tab))tab="overview";
+  dashboardTab=tab;
+  const [title,subtitle]=dashboardTitles[tab];
+  $("#dashboardTitle").textContent=title;$("#dashboardSubtitle").textContent=subtitle;$("#dashboardMessage").textContent="";
+  $("#dashboardNav").querySelectorAll("button").forEach(button=>button.setAttribute("aria-current",String(button.dataset.dashboardTab===tab)));
+  $("#dashboardContent").innerHTML='<section class="dashboard-panel"><p class="dashboard-empty">Loading dashboard…</p></section>';
+  try{
+    if(currentUser.role==="admin"){
+      if(tab==="overview")renderAdminOverview(await api("/dashboard/admin"));
+      else if(tab==="orders")renderOrderDashboard(await api("/dashboard/orders"));
+      else if(tab==="products")await loadProductDashboard();
+      else if(tab==="team")renderTeamDashboard(await api("/dashboard/team"));
+    }else if(currentUser.role==="staff"){
+      if(tab==="overview")renderStaffOverview(await api("/dashboard/staff"));
+      else if(tab==="orders")renderOrderDashboard(await api("/dashboard/orders"));
+      else if(tab==="inventory"||tab==="catalog")await loadProductDashboard();
+    }else{
+      const data=await api("/dashboard/client");
+      if(tab==="profile")renderClientProfile(data.profile);
+      else renderClientOverview(data);
+    }
+  }catch(error){$("#dashboardMessage").textContent=error.message;$("#dashboardContent").innerHTML='<section class="dashboard-panel"><p class="dashboard-empty">This section could not be loaded.</p></section>'}
+}
+function metricCards(metrics,fields){
+  return `<section class="metric-grid">${fields.map(([key,label,format,helper])=>`<article class="metric-card"><span>${label}</span><strong>${format?format(metrics[key]):Number(metrics[key]||0).toLocaleString("en-KE")}</strong><small>${helper||"Updated just now"}</small></article>`).join("")}</section>`;
+}
+function orderRows(orders,editable){
+  if(!orders.length)return '<p class="dashboard-empty">No orders to show yet.</p>';
+  return `<div class="data-table-wrap"><table class="data-table"><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th>${editable?"<th>Update</th>":""}</tr></thead><tbody>${orders.map(order=>`<tr>
+    <td><b>${escapeHtml(order.order_number)}</b><br><small>${dashboardDate(order.created_at)}</small></td>
+    <td>${escapeHtml(order.customer_name)}<br><small>${escapeHtml(order.customer_email||order.customer_phone||"")}</small></td>
+    <td>${order.items.map(item=>`${escapeHtml(item.product_name)} × ${item.quantity}`).join("<br>")}</td>
+    <td>${dashboardMoney(order.total_amount)}</td>
+    <td><span class="order-status">${escapeHtml(order.status)}</span></td>
+    ${editable?`<td><select data-order-status="${order.id}" aria-label="Update status for ${escapeHtml(order.order_number)}">${statusOptions.map(status=>`<option value="${status}" ${status===order.status?"selected":""}>${status}</option>`).join("")}</select></td>`:""}
+  </tr>`).join("")}</tbody></table></div>`;
+}
+function productRows(products){
+  if(!products.length)return '<p class="dashboard-empty">No products found.</p>';
+  return `<div class="data-table-wrap"><table class="data-table"><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Availability</th><th></th></tr></thead><tbody>${products.map(product=>`<tr>
+    <td><b>${escapeHtml(product.name)}</b><br><small>${escapeHtml(product.slug)}</small></td><td>${escapeHtml(product.category_name)}</td><td>${dashboardMoney(product.price)}</td>
+    <td class="${product.stock_quantity<=5?"stock-low":""}">${Number(product.stock_quantity)}</td><td>${product.is_active?"Active":"Hidden"}</td>
+    <td><button class="dash-button" data-edit-product="${product.id}">Edit</button></td>
+  </tr>`).join("")}</tbody></table></div>`;
+}
+function renderAdminOverview(data){
+  const metrics=metricCards(data.metrics,[["revenue","Revenue",dashboardMoney,"Paid and fulfilled orders"],["orders","Orders",null,`${data.metrics.open_orders} need attention`],["customers","Customers",null,"Active client accounts"],["low_stock","Low stock",null,`${data.metrics.products} active products`]]);
+  const maxRevenue=Math.max(1,...data.sales_by_day.map(item=>Number(item.revenue)));
+  const bars=data.sales_by_day.map((item,index)=>`<div class="chart-day" title="${dashboardDate(item.date)} · ${dashboardMoney(item.revenue)}"><div class="chart-bar ${index===data.sales_by_day.length-1?"today":""}" style="height:${Math.max(3,Number(item.revenue)/maxRevenue*100)}%"></div><small>${new Date(item.date+"T12:00:00").toLocaleDateString("en-KE",{weekday:"short"})}</small></div>`).join("");
+  const maxStatus=Math.max(1,...data.orders_by_status.map(item=>Number(item.count)));
+  const statusChart=data.orders_by_status.length?data.orders_by_status.map(item=>`<div class="status-row"><span>${escapeHtml(item.status)}</span><div class="status-track"><div class="status-fill" style="width:${Number(item.count)/maxStatus*100}%"></div></div><b>${item.count}</b></div>`).join(""):'<p class="dashboard-empty">Order activity will appear here.</p>';
+  $("#dashboardContent").innerHTML=`${metrics}<div class="dash-panel-grid">
+    <section class="dashboard-panel"><div class="panel-heading"><div><h2>Sales trend</h2><p>Revenue across the last 7 days</p></div></div><div class="chart-bars">${bars}</div></section>
+    <section class="dashboard-panel"><div class="panel-heading"><div><h2>Orders by status</h2><p>Current order distribution</p></div></div><div class="status-chart">${statusChart}</div></section>
+  </div>
+  <section class="dashboard-panel"><div class="panel-heading"><div><h2>Recent orders</h2><p>Latest customer activity</p></div><button class="dash-button" data-dashboard-tab="orders">All orders</button></div>${orderRows(data.recent_orders,false)}</section>
+  <section class="dashboard-panel"><div class="panel-heading"><div><h2>Low stock alerts</h2><p>Products with ${LOW_STOCK_LIMIT} or fewer units</p></div><button class="dash-button" data-dashboard-tab="products">Manage stock</button></div>${productRows(data.low_stock_products)}</section>`;
+}
+function renderStaffOverview(data){
+  const metrics=metricCards(data.metrics,[["new_orders","New orders",null,"Pending or paid"],["processing","Processing",null,"Being prepared"],["ready_to_ship","Shipped",null,"In transit"],["low_stock","Low stock",null,"Needs replenishment"]]);
+  $("#dashboardContent").innerHTML=`${metrics}
+    <section class="dashboard-panel"><div class="panel-heading"><div><h2>Orders to work on</h2><p>Update status as each order moves through fulfilment.</p></div><button class="dash-button" data-dashboard-tab="orders">All orders</button></div>${orderRows(data.orders.slice(0,8),true)}</section>
+    <section class="dashboard-panel"><div class="panel-heading"><div><h2>Stock alerts</h2><p>Review and update low inventory.</p></div><button class="dash-button" data-dashboard-tab="inventory">Open inventory</button></div>${productRows(data.low_stock_products)}</section>`;
+}
+function renderOrderDashboard(orders){
+  $("#dashboardContent").innerHTML=`<section class="dashboard-panel"><div class="panel-heading"><div><h2>${orders.length} orders</h2><p>Customer contact and order status for fulfilment.</p></div></div>${orderRows(orders,true)}</section>`;
+}
+async function loadProductDashboard(editId=null){
+  const [productsInDb,categoriesInDb]=await Promise.all([api("/dashboard/products"),api("/categories")]);
+  editingProductId=editId;
+  const product=editId===null?null:productsInDb.find(item=>item.id===Number(editId));
+  const options=categoriesInDb.map(item=>`<option value="${item.id}" ${product&&product.category_id===item.id?"selected":""}>${escapeHtml(item.name)}</option>`).join("");
+  const active=product?product.is_active:true;
+  $("#dashboardContent").innerHTML=`<section class="dashboard-panel"><div class="panel-heading"><div><h2>${product?"Edit product":"Add a product"}</h2><p>Changes will appear in the customer catalog.</p></div></div>
+    <form class="dashboard-form" id="productForm">
+      <label>Product name<input id="productName" required minlength="2" maxlength="200" value="${escapeHtml(product?.name||"")}"></label>
+      <label>Category<select id="productCategory" required>${options}</select></label>
+      <label>Price (KES)<input id="productPrice" type="number" min="0" step="0.01" required value="${product?Number(product.price):""}"></label>
+      <label>Stock quantity<input id="productStock" type="number" min="0" step="1" required value="${product?product.stock_quantity:0}"></label>
+      <label class="form-wide">Photo URL<input id="productImage" type="url" maxlength="500" value="${escapeHtml(product?.image_url||"")}" placeholder="https://..."></label>
+      <label class="form-wide">Description<textarea id="productDescription" maxlength="2000">${escapeHtml(product?.description||"")}</textarea></label>
+      ${product?`<label>Availability<select id="productActive"><option value="true" ${active?"selected":""}>Active</option><option value="false" ${!active?"selected":""}>Hidden</option></select></label>`:""}
+      <div class="form-actions form-wide"><button class="dash-button primary" type="submit">${product?"Save product":"Add product"}</button>${product?'<button class="dash-button" type="button" id="cancelProductEdit">Cancel</button>':""}</div>
+    </form></section>
+    <section class="dashboard-panel"><div class="panel-heading"><div><h2>Catalog inventory</h2><p>Manage product details, visibility, prices, and quantities.</p></div></div>${productRows(productsInDb)}</section>`;
+}
+function renderTeamDashboard(members){
+  $("#dashboardContent").innerHTML=`<section class="dashboard-panel"><div class="panel-heading"><div><h2>Team and accounts</h2><p>Promote registered client accounts to staff. Provision the configured ADMIN_EMAIL using create_admin.py.</p></div></div>
+    <div class="data-table-wrap"><table class="data-table"><thead><tr><th>Account</th><th>Email</th><th>Role</th><th>Joined</th><th></th></tr></thead><tbody>${members.map(member=>`<tr>
+      <td><div class="team-row"><span class="team-avatar">${escapeHtml(member.full_name.charAt(0).toUpperCase())}</span><b>${escapeHtml(member.full_name)}</b></div></td>
+      <td>${escapeHtml(member.email)}</td><td>${escapeHtml(member.role)}</td><td>${dashboardDate(member.created_at)}</td>
+      <td>${member.role==="admin"||member.id===currentUser.id?'<small>Protected</small>':`<select data-team-role="${member.id}" aria-label="Role for ${escapeHtml(member.email)}"><option value="client" ${member.role==="client"?"selected":""}>Client</option><option value="staff" ${member.role==="staff"?"selected":""}>Staff</option></select>`}</td>
+    </tr>`).join("")}</tbody></table></div></section>`;
+}
+function renderClientOverview(data){
+  const metrics=metricCards(data.metrics,[["orders","Orders",null,"All your purchases"],["total_spent","Total spent",dashboardMoney,"Confirmed orders"]]);
+  $("#dashboardContent").innerHTML=`${metrics}<section class="dashboard-panel"><div class="panel-heading"><div><h2>Recent orders</h2><p>Track your Nyumbani Home purchases.</p></div><button class="dash-button" data-dashboard-tab="orders">Order history</button></div>${orderRows(data.orders.slice(0,5),false)}</section>
+    <section class="dashboard-panel"><div class="panel-heading"><div><h2>Your details</h2><p>${escapeHtml(data.profile.email)}${data.profile.phone?` · ${escapeHtml(data.profile.phone)}`:""}</p></div><button class="dash-button" data-dashboard-tab="profile">Edit profile</button></div></section>`;
+}
+function renderClientProfile(profile){
+  $("#dashboardContent").innerHTML=`<section class="dashboard-panel"><div class="panel-heading"><div><h2>Personal details</h2><p>Email address is used as your account identifier.</p></div></div>
+    <form id="clientProfileForm" class="dashboard-form">
+      <label>Full name<input id="clientName" required minlength="2" maxlength="120" value="${escapeHtml(profile.full_name)}"></label>
+      <label>Email address<input value="${escapeHtml(profile.email)}" disabled></label>
+      <label>Mobile phone<input id="clientPhone" type="tel" autocomplete="tel" value="${escapeHtml(profile.phone||"")}" placeholder="0712 345 678"></label>
+      <div class="form-actions form-wide"><button class="dash-button primary" type="submit">Save profile</button></div>
+    </form></section>`;
+}
+function setDashboardMessage(message,isError=false){
+  const notice=$("#dashboardMessage");notice.textContent=message;notice.style.color=isError?"var(--danger)":"var(--green)";
+}
+async function saveProduct(event){
+  event.preventDefault();
+  const payload={
+    name:$("#productName").value.trim(),category_id:Number($("#productCategory").value),
+    price:$("#productPrice").value,stock_quantity:Number($("#productStock").value),
+    image_url:$("#productImage").value.trim()||null,description:$("#productDescription").value.trim()||null
+  };
+  if($("#productActive"))payload.is_active=$("#productActive").value==="true";
+  try{
+    await api(editingProductId?`/dashboard/products/${editingProductId}`:"/dashboard/products",{method:editingProductId?"PATCH":"POST",body:JSON.stringify(payload)});
+    await loadCatalog();setDashboardMessage("Product saved. The customer catalog is updated.");await loadProductDashboard();
+  }catch(error){setDashboardMessage(error.message,true)}
+}
+async function saveClientProfile(event){
+  event.preventDefault();
+  try{
+    const profile=await api("/dashboard/client/profile",{method:"PATCH",body:JSON.stringify({full_name:$("#clientName").value.trim(),phone:$("#clientPhone").value.trim()||null})});
+    currentUser={...currentUser,...profile};
+    updateAccount();$("#dashUserName").textContent=currentUser.full_name;setDashboardMessage("Your profile has been updated.");
+  }catch(error){setDashboardMessage(error.message,true)}
+}
+async function changeOrderStatus(select){
+  try{
+    await api(`/dashboard/orders/${select.dataset.orderStatus}/status`,{method:"PATCH",body:JSON.stringify({status:select.value})});
+    setDashboardMessage("Order status updated.");await loadDashboardTab(dashboardTab);
+  }catch(error){setDashboardMessage(error.message,true)}
+}
+async function changeTeamRole(select){
+  try{
+    await api(`/dashboard/team/${select.dataset.teamRole}/role`,{method:"PATCH",body:JSON.stringify({role:select.value})});
+    setDashboardMessage("Account role updated.");await loadDashboardTab("team");
+  }catch(error){setDashboardMessage(error.message,true)}
 }
 function renderDrawer(){
   const body=$("#drawerBody"),foot=$("#drawerFoot");
@@ -412,10 +691,9 @@ async function submitAuth(event){
     const selectedProduct=!!pendingProduct;
     if(pendingProduct){setQuantity(pendingProduct.id,(cart[pendingProduct.id]||0)+1);pendingProduct=null}
     const destination=selectedProduct?"bag":returnAfterAuth;
-    if(destination==="landing")showLanding();
-    else showStore();
-    if(destination==="checkout"){screen="checkout";openDrawer();renderDrawer()}
-    else if(destination==="bag")openDrawer();
+    if(destination==="checkout"){showStore();screen="checkout";openDrawer();renderDrawer()}
+    else if(destination==="bag"){showStore();openDrawer()}
+    else showDashboard();
   }catch(err){error.textContent=err.message}
   finally{button.disabled=false;button.textContent=register?"Create account":"Sign in"}
 }
@@ -427,7 +705,7 @@ async function submitCheckout(){
   if(!normalized){error.textContent="Enter a valid Kenyan mobile number, like 0712 345 678.";return}
   const button=$("#pay");button.disabled=true;button.textContent="Sending payment request…";error.textContent="";
   try{
-    const result=await api("/checkout",{method:"POST",body:JSON.stringify({name,phone:normalized,delivery:ship,items:cartLines().map(line=>({id:line.product.id+1,qty:line.quantity}))})});
+    const result=await api("/checkout",{method:"POST",body:JSON.stringify({name,phone:normalized,delivery:ship,items:cartLines().map(line=>({id:line.product.id,qty:line.quantity}))})});
     cart={};saveCart();updateCount();screen="done";
     $("#drawerTitle").textContent="Order confirmed";
     $("#drawerBody").innerHTML=`<div class="empty" style="text-align:center;padding-top:55px"><h3>Thank you, ${escapeHtml(name.split(" ")[0])}!</h3><p>Your order ${escapeHtml(result.order_number)} is confirmed.</p><p>We’ll be in touch before delivery.</p></div>`;
@@ -442,6 +720,8 @@ document.addEventListener("click",event=>{
   if(data.category){category=data.category;renderCategories();renderProducts()}
   else if(data.openShop!==undefined)showStore()
   else if(data.openCategory)showStore(data.openCategory)
+  else if(data.dashboardTab)loadDashboardTab(data.dashboardTab)
+  else if(data.editProduct!==undefined)loadProductDashboard(data.editProduct)
   else if(data.select!==undefined)selectProduct(data.select);
   else if(data.plus!==undefined)setQuantity(data.plus,(cart[data.plus]||0)+1);
   else if(data.minus!==undefined)setQuantity(data.minus,(cart[data.minus]||0)-1);
@@ -454,13 +734,27 @@ document.addEventListener("click",event=>{
   else if(target.id==="backToBag"){screen="store";renderDrawer()}
   else if(target.id==="pay")submitCheckout();
   else if(target.id==="keepShopping"){screen="store";closeDrawer()}
-  else if(target.id==="account"){if(currentUser){api("/auth/logout",{method:"POST"}).then(()=>{currentUser=null;updateAccount()}).catch(error=>alert(error.message))}else showAuth("login",null,screen==="auth"?returnAfterAuth:screen)}
+  else if(target.id==="account"){if(currentUser)showDashboard();else showAuth("login",null,screen==="auth"?returnAfterAuth:screen)}
+  else if(target.id==="dashboardShop")showStore()
+  else if(target.id==="dashboardLogout"){api("/auth/logout",{method:"POST"}).then(()=>{currentUser=null;updateAccount();showLanding()}).catch(error=>setDashboardMessage(error.message,true))}
   else if(target.id==="loginTab"){authMode="login";renderAuth()}
   else if(target.id==="registerTab"){authMode="register";renderAuth()}
   else if(target.id==="backShop"){pendingProduct=null;if(returnAfterAuth==="landing")showLanding();else showStore()}
   else if(target.id==="homeLink"){event.preventDefault();pendingProduct=null;showLanding()}
 });
 $("#authForm").addEventListener("submit",submitAuth);
+$("#dashboardContent").addEventListener("submit",event=>{
+  if(event.target.id==="productForm")saveProduct(event);
+  else if(event.target.id==="clientProfileForm")saveClientProfile(event);
+});
+$("#dashboardContent").addEventListener("change",event=>{
+  if(event.target.matches("[data-order-status]"))changeOrderStatus(event.target);
+  else if(event.target.matches("[data-team-role]"))changeTeamRole(event.target);
+});
+$("#dashboardContent").addEventListener("click",event=>{
+  const button=event.target.closest("#cancelProductEdit");
+  if(button)loadProductDashboard();
+});
 $("#skipSplash").addEventListener("click",finishSplash);
 window.setTimeout(finishSplash,1200);
 $("#q").addEventListener("focus",()=>{if(screen==="landing")showStore()});
@@ -469,6 +763,7 @@ $("#q").addEventListener("input",event=>{query=event.target.value.toLowerCase().
 $("#qm").addEventListener("input",event=>{query=event.target.value.toLowerCase().trim();$("#q").value=event.target.value;renderProducts()});
 document.addEventListener("keydown",event=>{if(event.key==="Escape")closeDrawer()});
 renderCategories();renderProducts();updateCount();renderDrawer();
+loadCatalog();
 api("/auth/me").then(user=>{currentUser=user;updateAccount()}).catch(()=>updateAccount());
 </script>
 </body>

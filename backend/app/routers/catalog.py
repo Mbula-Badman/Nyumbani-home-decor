@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from app.database import get_db
 from app.models import Category, Product
@@ -22,7 +22,7 @@ def list_products(
     offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
 ):
-    stmt = select(Product).where(Product.is_active.is_(True))
+    stmt = select(Product).options(selectinload(Product.category)).where(Product.is_active.is_(True))
     if category:
         stmt = stmt.join(Category, Product.category_id == Category.id).where(Category.slug == category)
     if q:
@@ -32,7 +32,11 @@ def list_products(
 
 @router.get("/products/{slug}", response_model=ProductOut)
 def get_product(slug: str, db: Session = Depends(get_db)):
-    product = db.scalar(select(Product).where(Product.slug == slug, Product.is_active.is_(True)))
+    product = db.scalar(
+        select(Product)
+        .options(selectinload(Product.category))
+        .where(Product.slug == slug, Product.is_active.is_(True))
+    )
     if not product:
         raise HTTPException(status_code=404, detail="Product not found.")
     return product

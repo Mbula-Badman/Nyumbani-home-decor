@@ -26,3 +26,7 @@ class Product(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     category: Mapped["Category"] = relationship(back_populates="products")  # noqa: F821
+
+    @property
+    def category_name(self) -> str:
+        return self.category.name

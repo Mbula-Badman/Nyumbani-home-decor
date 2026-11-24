@@ -27,7 +27,10 @@ def upgrade() -> None:
         sa.Column("is_admin", sa.Boolean(), nullable=False, server_default=sa.false()),
         sa.Column("is_active", sa.Boolean(), nullable=False, server_default=sa.true()),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False, server_default=NOW),
-        sa.CheckConstraint("phone IS NULL OR phone ~ '^254[17][0-9]{8}$'", name="ck_users_phone_format"),
+        sa.CheckConstraint(
+            "phone IS NULL OR (length(phone) = 12 AND substr(phone, 1, 3) = '254')",
+            name="ck_users_phone_format",
+        ),
     )
     op.create_index("ix_users_email", "users", ["email"], unique=True)
 

@@ -8,10 +8,9 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from app.config import settings
-from app.database import get_db
-from app.database import Base, engine
+from app.database import Base, engine, get_db
 from app.models import __all__  # ensure every SQLAlchemy model is registered
-from app.routers import auth, catalog, checkout
+from app.routers import auth, catalog, checkout, dashboards
 from seed import main as seed_database
 
 app = FastAPI(title=settings.app_name)
@@ -27,6 +26,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(catalog.router)
 app.include_router(checkout.router)
+app.include_router(dashboards.router)
 
 FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
 

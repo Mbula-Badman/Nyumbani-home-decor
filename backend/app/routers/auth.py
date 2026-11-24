@@ -11,6 +11,7 @@ from app.auth import (
     set_session_cookie,
     verify_password,
 )
+from app.config import settings
 from app.database import get_db
 from app.models import User
 from app.schemas import LoginRequest, RegisterRequest, UserOut
@@ -21,6 +22,8 @@ router = APIRouter(prefix="/api/auth", tags=["authentication"])
 @router.post("/register", response_model=UserOut, status_code=201)
 def register(payload: RegisterRequest, response: Response, db: Session = Depends(get_db)):
     email = str(payload.email).strip().lower()
+    if settings.admin_email and email == settings.admin_email.strip().lower():
+        raise HTTPException(status_code=403, detail="This administrator account must be provisioned by the system operator.")
     if db.scalar(select(User.id).where(User.email == email)):
         raise HTTPException(status_code=409, detail="An account with this email already exists.")
     user = User(

@@ -6,6 +6,8 @@ import json
 import secrets
 import time
 
+from collections.abc import Callable
+
 from fastapi import Depends, HTTPException, Request, Response
 from sqlalchemy.orm import Session
 
@@ -84,6 +86,15 @@ def get_current_user(user: User | None = Depends(get_optional_current_user)) -> 
     if not user:
         raise HTTPException(status_code=401, detail="Please sign in to continue.")
     return user
+
+
+def require_roles(*roles: str) -> Callable:
+    def check_role(user: User = Depends(get_current_user)) -> User:
+        if user.role not in roles:
+            raise HTTPException(status_code=403, detail="You do not have permission to access this dashboard.")
+        return user
+
+    return check_role
 
 
 def clear_session_cookie(response: Response) -> None:
