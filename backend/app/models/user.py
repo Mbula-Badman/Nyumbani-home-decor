@@ -17,6 +17,7 @@ class User(Base):
     full_name: Mapped[str] = mapped_column(String(120))
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     phone: Mapped[str | None] = mapped_column(String(12), nullable=True)  # format 2547XXXXXXXX
+    profile_image_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
     password_hash: Mapped[str] = mapped_column(String(255))
     role: Mapped[str] = mapped_column(String(20), default="client", server_default="client")
     is_admin: Mapped[bool] = mapped_column(Boolean, server_default=false())

@@ -28,6 +28,7 @@ class UserOut(BaseModel):
     full_name: str
     email: EmailStr
     role: Literal["client", "staff", "admin"]
+    profile_image_url: str | None = None
 
 
 class CategoryOut(BaseModel):

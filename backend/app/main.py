@@ -11,9 +11,11 @@ from app.config import settings
 from app.database import Base, engine, get_db
 from app.models import __all__  # ensure every SQLAlchemy model is registered
 from app.routers import auth, catalog, checkout, dashboards
+from app.uploads import UPLOADS_DIR
 from seed import main as seed_database
 
 app = FastAPI(title=settings.app_name)
+UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,6 +29,7 @@ app.include_router(auth.router)
 app.include_router(catalog.router)
 app.include_router(checkout.router)
 app.include_router(dashboards.router)
+app.mount("/uploads", StaticFiles(directory=UPLOADS_DIR), name="uploads")
 
 FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
 

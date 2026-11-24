@@ -1,8 +1,9 @@
 from datetime import date, datetime, time, timedelta
 from decimal import Decimal
 import re
+from uuid import uuid4
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session, selectinload
 
@@ -11,6 +12,12 @@ from app.config import settings
 from app.database import get_db
 from app.models import Category, Order, Product, User
 from app.schemas import ClientProfileUpdate, OrderStatusUpdate, ProductCreate, ProductUpdate, UserRoleUpdate
+from app.uploads import (
+    MAX_IMAGE_SIZE_BYTES,
+    PRODUCT_IMAGES_DIR,
+    PROFILE_IMAGES_DIR,
+    image_extension,
+)
 
 router = APIRouter(prefix="/api/dashboard", tags=["dashboards"])
 MANAGED_ORDER_STATUSES = ("pending", "paid", "processing", "shipped", "delivered", "cancelled", "failed")
@@ -220,6 +227,47 @@ def list_dashboard_products(
     return [_product_row(product) for product in _load_products(db)]
 
 
+@router.post("/products/image")
+async def upload_product_image(
+    image: UploadFile = File(...),
+    _user: User = Depends(require_roles("admin", "staff")),
+):
+    data = await image.read(MAX_IMAGE_SIZE_BYTES + 1)
+    if len(data) > MAX_IMAGE_SIZE_BYTES:
+        raise HTTPException(status_code=413, detail="Product images must be 5 MB or smaller.")
+    extension = image_extension(data)
+    if extension is None:
+        raise HTTPException(status_code=415, detail="Upload a valid JPEG, PNG, or WebP image.")
+
+    PRODUCT_IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+    filename = f"{uuid4().hex}.{extension}"
+    (PRODUCT_IMAGES_DIR / filename).write_bytes(data)
+    return {"image_url": f"/uploads/products/{filename}"}
+
+
+@router.post("/profile/image")
+async def upload_profile_image(
+    image: UploadFile = File(...),
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    data = await image.read(MAX_IMAGE_SIZE_BYTES + 1)
+    if len(data) > MAX_IMAGE_SIZE_BYTES:
+        raise HTTPException(status_code=413, detail="Profile images must be 5 MB or smaller.")
+    extension = image_extension(data)
+    if extension is None:
+        raise HTTPException(status_code=415, detail="Upload a valid JPEG, PNG, or WebP image.")
+
+    user_directory = PROFILE_IMAGES_DIR / str(user.id)
+    user_directory.mkdir(parents=True, exist_ok=True)
+    filename = f"{uuid4().hex}.{extension}"
+    (user_directory / filename).write_bytes(data)
+    user.profile_image_url = f"/uploads/profiles/{user.id}/{filename}"
+    db.commit()
+    db.refresh(user)
+    return {"profile_image_url": user.profile_image_url}
+
+
 @router.post("/products", status_code=201)
 def create_dashboard_product(
     payload: ProductCreate,
@@ -289,6 +337,7 @@ def list_dashboard_team(
             "full_name": user.full_name,
             "email": user.email,
             "role": user.role,
+            "profile_image_url": user.profile_image_url,
             "is_active": user.is_active,
             "created_at": user.created_at,
         }
@@ -331,7 +380,13 @@ def client_overview(
     ).all()
     paid_orders = [order for order in orders if order.status in REVENUE_STATUSES]
     return {
-        "profile": {"id": user.id, "full_name": user.full_name, "email": user.email, "phone": user.phone},
+        "profile": {
+            "id": user.id,
+            "full_name": user.full_name,
+            "email": user.email,
+            "phone": user.phone,
+            "profile_image_url": user.profile_image_url,
+        },
         "metrics": {
             "orders": len(orders),
             "total_spent": sum((order.total_amount for order in paid_orders), Decimal("0")),
@@ -340,8 +395,20 @@ def client_overview(
     }
 
 
+@router.get("/profile")
+def get_profile(user: User = Depends(get_current_user)):
+    return {
+        "id": user.id,
+        "full_name": user.full_name,
+        "email": user.email,
+        "phone": user.phone,
+        "profile_image_url": user.profile_image_url,
+    }
+
+
+@router.patch("/profile")
 @router.patch("/client/profile")
-def update_client_profile(
+def update_profile(
     payload: ClientProfileUpdate,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
@@ -361,4 +428,10 @@ def update_client_profile(
         user.phone = phone or None
     db.commit()
     db.refresh(user)
-    return {"id": user.id, "full_name": user.full_name, "email": user.email, "phone": user.phone}
+    return {
+        "id": user.id,
+        "full_name": user.full_name,
+        "email": user.email,
+        "phone": user.phone,
+        "profile_image_url": user.profile_image_url,
+    }
