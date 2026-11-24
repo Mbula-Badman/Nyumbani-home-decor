@@ -532,7 +532,14 @@ function renderAuth(){
   selected.innerHTML=pendingProduct?`<img src="${pendingProduct.image}" alt=""><div><b>${escapeHtml(pendingProduct.name)}</b><small>${money(pendingProduct.price)} · ready to add after sign in</small></div>`:"";
 }
 async function api(path,options={}){
-  const response=await fetch(API+path,{credentials:"same-origin",...options,headers:{"Content-Type":"application/json",...(options.headers||{})}});
+  let response;
+  try{
+    response=await fetch(API+path,{credentials:"same-origin",...options,headers:{"Content-Type":"application/json",...(options.headers||{})}});
+  }catch(error){
+    console.error("Could not reach the shop API.",error);
+    if(window.location.protocol==="file:")throw new Error("Open the shop at http://127.0.0.1:8000/; the HTML file opened directly cannot connect to the API.");
+    throw new Error("Could not reach the shop API. Start FastAPI and open http://127.0.0.1:8000/.");
+  }
   const data=response.status===204?null:await response.json().catch(()=>null);
   if(!response.ok){
     const detail=Array.isArray(data?.detail)?data.detail.map(item=>item.msg).join(" "):data?.detail;
