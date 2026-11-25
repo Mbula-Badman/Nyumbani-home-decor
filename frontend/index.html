@@ -175,6 +175,13 @@ h1,h2,h3{font-family:Manrope,sans-serif;line-height:1.15}
 .dash-profile{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 2px;margin-bottom:12px}
 .dash-profile b{display:block;font-size:13px}
 .dash-profile small{color:var(--muted);font-size:11px}
+.dash-profile{display:flex;align-items:center;gap:10px}
+.dash-profile-info{min-width:0}
+.dash-avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;display:grid;place-items:center;flex:none;background:#edf2ed;color:var(--green);font-weight:700}
+.dash-avatar img,.team-avatar img{width:100%;height:100%;object-fit:cover}
+.team-avatar img{border-radius:50%}
+.profile-picture-preview{width:88px;height:88px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:#edf2ed;color:var(--green);font-size:28px;font-weight:700}
+.profile-picture-preview img{width:100%;height:100%;object-fit:cover}
 .dash-nav{display:grid;gap:4px}
 .dash-nav button{border:0;border-radius:6px;background:none;color:var(--muted);padding:10px;text-align:left;font-weight:600}
 .dash-nav button:hover,.dash-nav button[aria-current="page"]{background:#eef2ec;color:var(--green)}
@@ -371,7 +378,7 @@ h1,h2,h3{font-family:Manrope,sans-serif;line-height:1.15}
   <div class="dashboard-layout">
     <aside class="dashboard-side">
       <div class="dash-brand"><span class="logo-mark" aria-hidden="true">N</span>Nyumbani workspace</div>
-      <div class="dash-profile"><b id="dashUserName"></b><small id="dashUserRole"></small></div>
+      <div class="dash-profile"><div class="dash-avatar" id="dashUserAvatar" aria-hidden="true"></div><div class="dash-profile-info"><b id="dashUserName"></b><small id="dashUserRole"></small></div></div>
       <nav class="dash-nav" id="dashboardNav" aria-label="Dashboard sections"></nav>
     </aside>
     <section class="dashboard-main">
@@ -534,7 +541,9 @@ function renderAuth(){
 async function api(path,options={}){
   let response;
   try{
-    response=await fetch(API+path,{credentials:"same-origin",...options,headers:{"Content-Type":"application/json",...(options.headers||{})}});
+    const headers={...(options.headers||{})};
+    if(!(options.body instanceof FormData))headers["Content-Type"]="application/json";
+    response=await fetch(API+path,{credentials:"same-origin",...options,headers});
   }catch(error){
     console.error("Could not reach the shop API.",error);
     if(window.location.protocol==="file:")throw new Error("Open the shop at http://127.0.0.1:8000/; the HTML file opened directly cannot connect to the API.");
@@ -548,8 +557,8 @@ async function api(path,options={}){
   return data;
 }
 const dashboardTabs={
-  admin:[["overview","Overview"],["orders","Orders"],["products","Products & stock"],["team","Team"]],
-  staff:[["overview","Today"],["orders","Orders"],["inventory","Inventory"],["catalog","Catalog"]],
+  admin:[["overview","Overview"],["orders","Orders"],["products","Products & stock"],["team","Team"],["profile","My profile"]],
+  staff:[["overview","Today"],["orders","Orders"],["inventory","Inventory"],["catalog","Catalog"],["profile","My profile"]],
   client:[["overview","Overview"],["orders","My orders"],["profile","My profile"]]
 };
 const dashboardTitles={
@@ -559,7 +568,7 @@ const dashboardTitles={
   inventory:["Inventory","Check stock and update product details."],
   catalog:["Catalog","Edit the products available to customers."],
   team:["Team","Manage staff access and customer accounts."],
-  profile:["My profile","Keep your account and delivery details up to date."]
+  profile:["My profile","Update your account details and profile photo."]
 };
 const statusOptions=["pending","paid","processing","shipped","delivered","cancelled","failed"];
 const dashboardDate=value=>value?new Date(value).toLocaleDateString("en-KE",{day:"numeric",month:"short",year:"numeric"}):"—";
@@ -568,12 +577,17 @@ function showDashboard(tab="overview"){
   if(!currentUser){showAuth("login",null,screen==="landing"?"landing":"store");return}
   screen="dashboard";dashboardTab=tab;closeDrawer();
   $("#landingPage").classList.remove("active");$("#storePage").classList.add("hidden");$("#authPage").classList.remove("on");$("#dashboardPage").classList.add("on");
-  $("#dashUserName").textContent=currentUser.full_name;
+  renderDashboardIdentity();
   $("#dashUserRole").textContent=currentUser.role.charAt(0).toUpperCase()+currentUser.role.slice(1)+" account";
   $("#dashboardEyebrow").textContent=currentUser.role.toUpperCase()+" DASHBOARD";
   $("#dashboardNav").innerHTML=dashboardTabs[currentUser.role].map(([id,label])=>`<button data-dashboard-tab="${id}" aria-current="${id===tab?"page":"false"}">${label}</button>`).join("");
   window.scrollTo({top:0,behavior:"smooth"});
   loadDashboardTab(tab);
+}
+function renderDashboardIdentity(){
+  $("#dashUserName").textContent=currentUser.full_name;
+  const avatar=$("#dashUserAvatar");
+  avatar.innerHTML=currentUser.profile_image_url?`<img src="${escapeHtml(currentUser.profile_image_url)}" alt="">`:`<span>${escapeHtml(currentUser.full_name.charAt(0).toUpperCase())}</span>`;
 }
 async function loadDashboardTab(tab){
   if(!dashboardTabs[currentUser.role].some(([id])=>id===tab))tab="overview";
@@ -583,7 +597,8 @@ async function loadDashboardTab(tab){
   $("#dashboardNav").querySelectorAll("button").forEach(button=>button.setAttribute("aria-current",String(button.dataset.dashboardTab===tab)));
   $("#dashboardContent").innerHTML='<section class="dashboard-panel"><p class="dashboard-empty">Loading dashboard…</p></section>';
   try{
-    if(currentUser.role==="admin"){
+    if(tab==="profile")renderUserProfile(await api("/dashboard/profile"));
+    else if(currentUser.role==="admin"){
       if(tab==="overview")renderAdminOverview(await api("/dashboard/admin"));
       else if(tab==="orders")renderOrderDashboard(await api("/dashboard/orders"));
       else if(tab==="products")await loadProductDashboard();
@@ -594,8 +609,7 @@ async function loadDashboardTab(tab){
       else if(tab==="inventory"||tab==="catalog")await loadProductDashboard();
     }else{
       const data=await api("/dashboard/client");
-      if(tab==="profile")renderClientProfile(data.profile);
-      else renderClientOverview(data);
+      renderClientOverview(data);
     }
   }catch(error){$("#dashboardMessage").textContent=error.message;$("#dashboardContent").innerHTML='<section class="dashboard-panel"><p class="dashboard-empty">This section could not be loaded.</p></section>'}
 }
@@ -656,6 +670,7 @@ async function loadProductDashboard(editId=null){
       <label>Price (KES)<input id="productPrice" type="number" min="0" step="0.01" required value="${product?Number(product.price):""}"></label>
       <label>Stock quantity<input id="productStock" type="number" min="0" step="1" required value="${product?product.stock_quantity:0}"></label>
       <label class="form-wide">Photo URL<input id="productImage" type="url" maxlength="500" value="${escapeHtml(product?.image_url||"")}" placeholder="https://..."></label>
+      <label class="form-wide">Or upload from this device<input id="productImageFile" type="file" accept="image/jpeg,image/png,image/webp"><small>JPEG, PNG, or WebP; maximum 5 MB. An uploaded image replaces the URL above.</small></label>
       <label class="form-wide">Description<textarea id="productDescription" maxlength="2000">${escapeHtml(product?.description||"")}</textarea></label>
       ${product?`<label>Availability<select id="productActive"><option value="true" ${active?"selected":""}>Active</option><option value="false" ${!active?"selected":""}>Hidden</option></select></label>`:""}
       <div class="form-actions form-wide"><button class="dash-button primary" type="submit">${product?"Save product":"Add product"}</button>${product?'<button class="dash-button" type="button" id="cancelProductEdit">Cancel</button>':""}</div>
@@ -665,7 +680,7 @@ async function loadProductDashboard(editId=null){
 function renderTeamDashboard(members){
   $("#dashboardContent").innerHTML=`<section class="dashboard-panel"><div class="panel-heading"><div><h2>Team and accounts</h2><p>Promote registered client accounts to staff. Provision the configured ADMIN_EMAIL using create_admin.py.</p></div></div>
     <div class="data-table-wrap"><table class="data-table"><thead><tr><th>Account</th><th>Email</th><th>Role</th><th>Joined</th><th></th></tr></thead><tbody>${members.map(member=>`<tr>
-      <td><div class="team-row"><span class="team-avatar">${escapeHtml(member.full_name.charAt(0).toUpperCase())}</span><b>${escapeHtml(member.full_name)}</b></div></td>
+      <td><div class="team-row"><span class="team-avatar">${member.profile_image_url?`<img src="${escapeHtml(member.profile_image_url)}" alt="">`:escapeHtml(member.full_name.charAt(0).toUpperCase())}</span><b>${escapeHtml(member.full_name)}</b></div></td>
       <td>${escapeHtml(member.email)}</td><td>${escapeHtml(member.role)}</td><td>${dashboardDate(member.created_at)}</td>
       <td>${member.role==="admin"||member.id===currentUser.id?'<small>Protected</small>':`<select data-team-role="${member.id}" aria-label="Role for ${escapeHtml(member.email)}"><option value="client" ${member.role==="client"?"selected":""}>Client</option><option value="staff" ${member.role==="staff"?"selected":""}>Staff</option></select>`}</td>
     </tr>`).join("")}</tbody></table></div></section>`;
@@ -675,14 +690,25 @@ function renderClientOverview(data){
   $("#dashboardContent").innerHTML=`${metrics}<section class="dashboard-panel"><div class="panel-heading"><div><h2>Recent orders</h2><p>Track your Nyumbani Home purchases.</p></div><button class="dash-button" data-dashboard-tab="orders">Order history</button></div>${orderRows(data.orders.slice(0,5),false)}</section>
     <section class="dashboard-panel"><div class="panel-heading"><div><h2>Your details</h2><p>${escapeHtml(data.profile.email)}${data.profile.phone?` · ${escapeHtml(data.profile.phone)}`:""}</p></div><button class="dash-button" data-dashboard-tab="profile">Edit profile</button></div></section>`;
 }
-function renderClientProfile(profile){
+function renderUserProfile(profile){
   $("#dashboardContent").innerHTML=`<section class="dashboard-panel"><div class="panel-heading"><div><h2>Personal details</h2><p>Email address is used as your account identifier.</p></div></div>
-    <form id="clientProfileForm" class="dashboard-form">
+    <form id="userProfileForm" class="dashboard-form">
+      <div class="form-wide profile-picture-preview" id="profilePicturePreview">${profile.profile_image_url?`<img src="${escapeHtml(profile.profile_image_url)}" alt="Profile photo">`:`<span>${escapeHtml(profile.full_name.charAt(0).toUpperCase())}</span>`}</div>
+      <label class="form-wide">Profile photo<input id="profileImageFile" type="file" accept="image/jpeg,image/png,image/webp"><small>JPEG, PNG, or WebP; maximum 5 MB.</small></label>
       <label>Full name<input id="clientName" required minlength="2" maxlength="120" value="${escapeHtml(profile.full_name)}"></label>
       <label>Email address<input value="${escapeHtml(profile.email)}" disabled></label>
       <label>Mobile phone<input id="clientPhone" type="tel" autocomplete="tel" value="${escapeHtml(profile.phone||"")}" placeholder="0712 345 678"></label>
       <div class="form-actions form-wide"><button class="dash-button primary" type="submit">Save profile</button></div>
     </form></section>`;
+}
+function previewProfileImage(input){
+  const file=input.files[0];
+  if(!file)return;
+  const preview=$("#profilePicturePreview");
+  const image=document.createElement("img");
+  image.alt="Selected profile photo";
+  image.src=URL.createObjectURL(file);
+  preview.replaceChildren(image);
 }
 function setDashboardMessage(message,isError=false){
   const notice=$("#dashboardMessage");notice.textContent=message;notice.style.color=isError?"var(--danger)":"var(--green)";
@@ -696,16 +722,28 @@ async function saveProduct(event){
   };
   if($("#productActive"))payload.is_active=$("#productActive").value==="true";
   try{
+    const imageFile=$("#productImageFile").files[0];
+    if(imageFile){
+      const formData=new FormData();formData.append("image",imageFile);
+      const uploaded=await api("/dashboard/products/image",{method:"POST",body:formData});
+      payload.image_url=uploaded.image_url;
+    }
     await api(editingProductId?`/dashboard/products/${editingProductId}`:"/dashboard/products",{method:editingProductId?"PATCH":"POST",body:JSON.stringify(payload)});
     await loadCatalog();setDashboardMessage("Product saved. The customer catalog is updated.");await loadProductDashboard();
   }catch(error){setDashboardMessage(error.message,true)}
 }
-async function saveClientProfile(event){
+async function saveUserProfile(event){
   event.preventDefault();
   try{
-    const profile=await api("/dashboard/client/profile",{method:"PATCH",body:JSON.stringify({full_name:$("#clientName").value.trim(),phone:$("#clientPhone").value.trim()||null})});
+    const imageFile=$("#profileImageFile").files[0];
+    if(imageFile){
+      const formData=new FormData();formData.append("image",imageFile);
+      const uploaded=await api("/dashboard/profile/image",{method:"POST",body:formData});
+      currentUser.profile_image_url=uploaded.profile_image_url;
+    }
+    const profile=await api("/dashboard/profile",{method:"PATCH",body:JSON.stringify({full_name:$("#clientName").value.trim(),phone:$("#clientPhone").value.trim()||null})});
     currentUser={...currentUser,...profile};
-    updateAccount();$("#dashUserName").textContent=currentUser.full_name;setDashboardMessage("Your profile has been updated.");
+    updateAccount();renderDashboardIdentity();setDashboardMessage("Your profile has been updated.");
   }catch(error){setDashboardMessage(error.message,true)}
 }
 async function changeOrderStatus(select){
@@ -774,10 +812,36 @@ async function submitCheckout(){
   try{
     const result=await api("/checkout",{method:"POST",body:JSON.stringify({name,phone:normalized,delivery:ship,items:cartLines().map(line=>({id:line.product.id,qty:line.quantity}))})});
     cart={};saveCart();updateCount();screen="done";
-    $("#drawerTitle").textContent="Order confirmed";
-    $("#drawerBody").innerHTML=`<div class="empty" style="text-align:center;padding-top:55px"><h3>Thank you, ${escapeHtml(name.split(" ")[0])}!</h3><p>Your order ${escapeHtml(result.order_number)} is confirmed.</p><p>We’ll be in touch before delivery.</p></div>`;
+    $("#drawerTitle").textContent="Waiting for payment";
+    $("#drawerBody").innerHTML=`<div class="empty" style="text-align:center;padding-top:55px"><h3>Check your phone</h3><p>${escapeHtml(result.message)}</p><p>Enter your M-Pesa PIN to pay for order ${escapeHtml(result.order_number)}.</p><p id="paymentStatusMessage" role="status">Waiting for M-Pesa confirmation…</p></div>`;
     $("#drawerFoot").innerHTML='<button class="checkout-btn" id="keepShopping">Keep shopping</button>';
+    if(result.checkout_request_id)await waitForPayment(result.checkout_request_id,result.order_number,name);
   }catch(err){error.textContent=err.message;button.disabled=false;button.textContent="Pay with M-Pesa"}
+}
+const delay=milliseconds=>new Promise(resolve=>window.setTimeout(resolve,milliseconds));
+async function waitForPayment(checkoutRequestId,orderNumber,customerName){
+  for(let attempt=0;attempt<30;attempt++){
+    await delay(2000);
+    try{
+      const payment=await api(`/payments/${encodeURIComponent(checkoutRequestId)}`);
+      if(payment.status==="success"){
+        $("#drawerTitle").textContent="Order confirmed";
+        $("#drawerBody").innerHTML=`<div class="empty" style="text-align:center;padding-top:55px"><h3>Thank you, ${escapeHtml(customerName.split(" ")[0])}!</h3><p>Your order ${escapeHtml(payment.order_number||orderNumber)} is confirmed.</p><p>M-Pesa receipt: <b>${escapeHtml(payment.receipt||"")}</b></p><p>We’ll be in touch before delivery.</p></div>`;
+        return;
+      }
+      if(payment.status!=="pending"){
+        $("#drawerTitle").textContent="Payment not completed";
+        $("#drawerBody").innerHTML=`<div class="empty" style="text-align:center;padding-top:55px"><h3>Payment not completed</h3><p>${escapeHtml(payment.message||"Your M-Pesa payment was not completed.")}</p><p>Order ${escapeHtml(payment.order_number||orderNumber)} was not confirmed. Please try checkout again.</p></div>`;
+        return;
+      }
+    }catch(error){
+      const statusMessage=$("#paymentStatusMessage");
+      if(statusMessage)statusMessage.textContent=error.message;
+      return;
+    }
+  }
+  const statusMessage=$("#paymentStatusMessage");
+  if(statusMessage)statusMessage.textContent=`Still waiting for confirmation for order ${orderNumber}. You can check your order history later.`;
 }
 
 document.addEventListener("click",event=>{
@@ -812,11 +876,12 @@ document.addEventListener("click",event=>{
 $("#authForm").addEventListener("submit",submitAuth);
 $("#dashboardContent").addEventListener("submit",event=>{
   if(event.target.id==="productForm")saveProduct(event);
-  else if(event.target.id==="clientProfileForm")saveClientProfile(event);
+  else if(event.target.id==="userProfileForm")saveUserProfile(event);
 });
 $("#dashboardContent").addEventListener("change",event=>{
   if(event.target.matches("[data-order-status]"))changeOrderStatus(event.target);
   else if(event.target.matches("[data-team-role]"))changeTeamRole(event.target);
+  else if(event.target.id==="profileImageFile")previewProfileImage(event.target);
 });
 $("#dashboardContent").addEventListener("click",event=>{
   const button=event.target.closest("#cancelProductEdit");
