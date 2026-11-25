@@ -56,3 +56,12 @@ def health_check():
 def health_check_db(db: Session = Depends(get_db)):
     db.execute(text("SELECT 1"))
     return {"database": "ok"}
+
+
+@app.get("/api/health/mpesa")
+def mpesa_configuration_status():
+    return {
+        "environment": settings.mpesa_env,
+        "configured": not settings.mpesa_missing_variables,
+        "missing_variables": settings.mpesa_missing_variables,
+    }

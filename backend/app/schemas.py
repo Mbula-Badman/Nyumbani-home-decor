@@ -68,8 +68,10 @@ class CheckoutOut(BaseModel):
     order_id: int
     order_number: str
     status: str
-    receipt: str
+    receipt: str | None = None
     total: Decimal
+    checkout_request_id: str | None = None
+    message: str
 
 
 class ProductCreate(BaseModel):
